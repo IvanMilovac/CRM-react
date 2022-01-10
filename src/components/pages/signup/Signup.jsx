@@ -1,27 +1,27 @@
 import React from "react";
 
-import "./Login.scss";
+import "./Signup.scss";
 
-const Login = () => {
-  const handleLogin = (e) => {
+const Signup = () => {
+  const handleSignup = (e) => {
     e.preventDefault();
     console.log(e.target[0].value, e.target[1].value);
   };
   return (
-    <div className="login">
-      <div className="login__container">
-        <form className="login__container--form" onSubmit={handleLogin}>
+    <div className="signup">
+      <div className="signup__container">
+        <form className="signup__container--form" onSubmit={handleSignup}>
           <label htmlFor="email">
             <input type="email" name="email" />
           </label>
           <label htmlFor="password">
             <input type="password" name="password" />
           </label>
-          <button type="submit">Login</button>
+          <button type="submit">Signup</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
