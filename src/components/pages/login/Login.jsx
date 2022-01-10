@@ -1,11 +1,15 @@
-import React from 'react'
+import "./Login.scss";
 
 const Login = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return (
+    <div className="login">
+      <div className="login__container">
+        <form className="login__container--form">
+          
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default Login
+export default Login;
