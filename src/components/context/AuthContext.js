@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
-  console.log(currentUser);
+
   const value = {
     currentUser,
     login,

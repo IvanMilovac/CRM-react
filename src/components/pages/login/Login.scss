@@ -1,3 +1,5 @@
+@use "../../../scss/mixins" as m;
+
 .login {
   width: 100%;
   height: 100vh;
@@ -8,18 +10,85 @@
     url("../../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &__container {
-    width: 500px;
-    max-width: 90%;
-    height: 600px;
-    max-height: 80%;
-    border: 0.3rem solid rgb(98, 98, 98);
-    border-radius: 0.75rem;
-    background: white;
-    -webkit-box-shadow: 3px 17px 32px 0px #828282;
-    box-shadow: 3px 17px 32px 0px #828282;
+  @include m.flex();
+}
+
+.login__container {
+  @include m.flex($dir: column);
+  padding: 1.5rem;
+  width: 400px;
+  max-width: 90%;
+  height: 500px;
+  max-height: 80%;
+  @include m.border(
+    $width: 0.3rem,
+    $color: rgba(0, 0, 0, 0.808),
+    $radius: 0.5rem
+  );
+  background: white;
+  -webkit-box-shadow: 3px 17px 32px 0px #828282;
+  box-shadow: 3px 17px 32px 0px #828282;
+  &-error {
+    text-align: center;
+  }
+  &-error span {
+    font-size: 1.3rem;
+    margin-inline: 0.7rem;
+    cursor: pointer;
+  }
+  .error-text {
+    color: red;
+    background: rgba(211, 118, 118, 0.377);
+    padding: 0.2rem 0.3rem;
+    @include m.border($color: red, $radius: 0.3rem);
+  }
+  &-header {
+    @include m.flex($cross: flex-end, $gap: 0.5rem);
+    img {
+      width: 5rem;
+    }
+  }
+  &:last-child a {
+    display: inline-block;
+    margin-left: 0.5rem;
+    text-decoration: none;
+    color: rgb(53, 53, 53);
+    font-weight: bold;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.login__container-form {
+  flex: 1 1 auto;
+  width: 100%;
+  @include m.flex($dir: column, $gap: 2rem);
+  input {
+    width: 90%;
+    height: 2rem;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    border-bottom: 2px solid black;
+    background: transparent;
+  }
+  .error {
+    background: rgba(211, 118, 118, 0.377);
+    border-color: red;
+  }
+  button {
+    background: transparent;
+    cursor: pointer;
+    padding: 0.3rem 1.5rem;
+    font-size: 1rem;
+    @include m.border($color: rgba(89, 89, 89, 0.87), $radius: 0.2rem);
+    &:hover {
+      background: black;
+      color: white;
+      -webkit-box-shadow: 3px 3px 32px 0px #828282;
+      box-shadow: 3px 3px 32px 0px #828282;
+    }
   }
 }

@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./Signup.scss";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+  const { signup } = useAuth();
+
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
+      await signup(email, password);
     } catch (e) {
+      console.log(e);
     }
+    setEmail("");
+    setPassword("");
+    navigate("/");
   };
 
   const handleEmailChange = (e) => setEmail(e.target.value);
@@ -39,6 +48,9 @@ const Signup = () => {
           </label>
           <button type="submit">Signup</button>
         </form>
+        <p>
+          Already have account? <a href="/login">Log In</a>
+        </p>
       </div>
     </div>
   );

@@ -4,26 +4,103 @@
   background: radial-gradient(rgba(241, 241, 241, 0.687), rgba(78, 78, 78, 0.578)), url("../../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0;
 }
 
 .login__container {
-  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0;
+  padding: 1.5rem;
+  width: 400px;
   max-width: 90%;
-  height: 600px;
+  height: 500px;
   max-height: 80%;
-  border: 0.3rem solid #626262;
-  border-radius: 0.75rem;
+  border: 0.3rem solid rgba(0, 0, 0, 0.808);
+  border-radius: 0.5rem;
   background: white;
-  -webkit-box-shadow: 3px 17px 32px 0px #828282;
   box-shadow: 3px 17px 32px 0px #828282;
+}
+.login__container-error {
+  text-align: center;
+}
+.login__container-error span {
+  font-size: 1.3rem;
+  margin-inline: 0.7rem;
+  cursor: pointer;
+}
+.login__container .error-text {
+  color: red;
+  background: rgba(211, 118, 118, 0.377);
+  padding: 0.2rem 0.3rem;
+  border: 1px solid red;
+  border-radius: 0.3rem;
+}
+.login__container-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+.login__container-header img {
+  width: 5rem;
+}
+.login__container:last-child a {
+  display: inline-block;
+  margin-left: 0.5rem;
+  text-decoration: none;
+  color: #353535;
+  font-weight: bold;
+}
+.login__container:last-child a:hover {
+  text-decoration: underline;
+}
+
+.login__container-form {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+.login__container-form input {
+  width: 90%;
+  height: 2rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  border-bottom: 2px solid black;
+  background: transparent;
+}
+.login__container-form .error {
+  background: rgba(211, 118, 118, 0.377);
+  border-color: red;
+}
+.login__container-form button {
+  background: transparent;
+  cursor: pointer;
+  padding: 0.3rem 1.5rem;
+  font-size: 1rem;
+  border: 1px solid rgba(89, 89, 89, 0.87);
+  border-radius: 0.2rem;
+}
+.login__container-form button:hover {
+  background: black;
+  color: white;
+  box-shadow: 3px 3px 32px 0px #828282;
 }
 /*# sourceMappingURL=Login.css.map */
