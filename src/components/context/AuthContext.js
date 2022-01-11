@@ -36,11 +36,11 @@ export function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   }
 
-  function updateEmail(email) {
+  function updateUserEmail(email) {
     return updateEmail(currentUser, email);
   }
 
-  function updatePassword(password) {
+  function updateUserPassword(password) {
     return updatePassword(currentUser, password);
   }
 
@@ -59,8 +59,8 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
-    updateEmail,
-    updatePassword,
+    updateUserEmail,
+    updateUserPassword,
   };
 
   return (
