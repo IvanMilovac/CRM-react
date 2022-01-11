@@ -4,10 +4,17 @@
   background: radial-gradient(rgba(241, 241, 241, 0.687), rgba(78, 78, 78, 0.578)), url("../../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .login__container {
   width: 500px;
   max-width: 90%;
@@ -16,6 +23,7 @@
   border: 0.3rem solid #626262;
   border-radius: 0.75rem;
   background: white;
+  -webkit-box-shadow: 3px 17px 32px 0px #828282;
   box-shadow: 3px 17px 32px 0px #828282;
 }
 /*# sourceMappingURL=Login.css.map */
