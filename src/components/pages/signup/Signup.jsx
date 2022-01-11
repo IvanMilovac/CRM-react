@@ -1,51 +1,88 @@
 import React, { useState } from "react";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import "./Signup.scss";
+
+import Input from "../../shared/Input";
+
+import Logo from "../../../assets/images/logo.svg";
+
+import "../login/Login.scss";
+
+const initialFormState = {
+  email: "",
+  password: "",
+  error: "",
+  loading: false,
+};
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formState, setFormState] = useState(initialFormState);
+  const { email, password, loading, error } = formState;
+
+  const notify = (success, msg) =>
+    success ? toast.success(msg) : toast.error(msg);
 
   const navigate = useNavigate();
   const { signup } = useAuth();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setFormState((prevState) => ({ ...prevState, error: "", loading: true }));
     try {
       await signup(email, password);
-    } catch (e) {
-      console.log(e);
+    } catch {
+      notify(
+        false,
+        "Error occured during signup process, check email and password and try again!"
+      );
+      return setFormState((prevState) => ({
+        ...prevState,
+        loading: false,
+        error:
+          "Error occured during signup process, check email and password and try again!",
+      }));
     }
-    setEmail("");
-    setPassword("");
+    setFormState((prevState) => ({ ...prevState, loading: false }));
     navigate("/");
   };
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-
+  const handleChange = ({ target: { name, value } }) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+      error: "",
+    }));
+  };
   return (
-    <div className="signup">
-      <div className="signup__container">
-        <form className="signup__container--form" onSubmit={handleSignup}>
-          <label htmlFor="email">
-            <input
-              type="email"
-              name="email"
-              onChange={handleEmailChange}
-              value={email}
-            />
-          </label>
-          <label htmlFor="password">
-            <input
-              type="password"
-              name="password"
-              onChange={handlePasswordChange}
-              value={password}
-            />
-          </label>
+    <div className="login">
+      <div className="container">
+        <div className="header">
+          <img src={Logo} alt="brand logo" className="logo" />
+        </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={7000}
+          hideProgressBar={true}
+          limit={3}
+          transition={Zoom}
+        />
+        <form className="form" onSubmit={handleSignup}>
+          <Input
+            name="email"
+            value={email}
+            type="email"
+            onChange={handleChange}
+            className={`${error && "error"}`}
+          />
+          <Input
+            name="password"
+            value={password}
+            type="password"
+            onChange={handleChange}
+            className={`${error && "error"}`}
+          />
           <button type="submit">Signup</button>
         </form>
         <p>

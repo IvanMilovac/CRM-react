@@ -13,7 +13,7 @@
   @include m.flex();
 }
 
-.login__container {
+.container {
   @include m.flex($dir: column);
   padding: 1.5rem;
   width: 400px;
@@ -28,28 +28,16 @@
   background: white;
   -webkit-box-shadow: 3px 17px 32px 0px #828282;
   box-shadow: 3px 17px 32px 0px #828282;
-  &-error {
-    text-align: center;
-  }
-  &-error span {
-    font-size: 1.3rem;
-    margin-inline: 0.7rem;
-    cursor: pointer;
-  }
-  .error-text {
-    color: red;
-    background: rgba(211, 118, 118, 0.377);
-    padding: 0.2rem 0.3rem;
-    @include m.border($color: red, $radius: 0.3rem);
-  }
-  &-header {
+  .header {
     @include m.flex($cross: flex-end, $gap: 0.5rem);
     img {
       width: 5rem;
     }
   }
-  &:last-child a {
+  &:last-child a,
+  .reset {
     display: inline-block;
+    cursor: pointer;
     margin-left: 0.5rem;
     text-decoration: none;
     color: rgb(53, 53, 53);
@@ -60,7 +48,7 @@
   }
 }
 
-.login__container-form {
+.form {
   flex: 1 1 auto;
   width: 100%;
   @include m.flex($dir: column, $gap: 2rem);
