@@ -8,7 +8,7 @@ import Input from "../../shared/Input";
 
 import Logo from "../../../assets/images/logo.svg";
 
-import "../login/Login.scss";
+import "../../../scss/components/FormContainer.scss";
 
 const initialFormState = {
   email: "",
@@ -55,12 +55,14 @@ const Signup = () => {
       error: "",
     }));
   };
+
   return (
-    <div className="login">
+    <div className="container__wrapper">
       <div className="container">
-        <div className="header">
+        <div className="container__header">
           <img src={Logo} alt="brand logo" className="logo" />
         </div>
+        <p className="container__title">Sign Up</p>
         <ToastContainer
           position="top-center"
           autoClose={7000}
@@ -68,7 +70,7 @@ const Signup = () => {
           limit={3}
           transition={Zoom}
         />
-        <form className="form" onSubmit={handleSignup}>
+        <form className="container__form" onSubmit={handleSignup}>
           <Input
             name="email"
             value={email}
@@ -83,7 +85,9 @@ const Signup = () => {
             onChange={handleChange}
             className={`${error && "error"}`}
           />
-          <button type="submit">Signup</button>
+          <button type="submit" disabled={loading || !!error}>
+            Signup
+          </button>
         </form>
         <p>
           Already have account? <a href="/login">Log In</a>

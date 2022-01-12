@@ -1,13 +1,13 @@
-@use "../../../scss/mixins" as m;
+@use "../partials/mixins" as m;
 
-.login {
+.container__wrapper {
   width: 100%;
   height: 100vh;
   background: radial-gradient(
       rgba(241, 241, 241, 0.687),
       rgba(78, 78, 78, 0.578)
     ),
-    url("../../../assets/images/funnel.jpg");
+    url("../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   @include m.flex();
@@ -28,14 +28,19 @@
   background: white;
   -webkit-box-shadow: 3px 17px 32px 0px #828282;
   box-shadow: 3px 17px 32px 0px #828282;
-  .header {
+  &__header {
     @include m.flex($cross: flex-end, $gap: 0.5rem);
     img {
       width: 5rem;
     }
   }
+  &__title {
+    margin-block: 1rem;
+    font-weight: bold;
+    font-size: 1.75rem;
+  }
   &:last-child a,
-  .reset {
+  &__reset {
     display: inline-block;
     cursor: pointer;
     margin-left: 0.5rem;
@@ -48,7 +53,7 @@
   }
 }
 
-.form {
+.container__form {
   flex: 1 1 auto;
   width: 100%;
   @include m.flex($dir: column, $gap: 2rem);

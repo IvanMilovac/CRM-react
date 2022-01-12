@@ -1,7 +1,7 @@
-.login {
+.container__wrapper {
   width: 100%;
   height: 100vh;
-  background: radial-gradient(rgba(241, 241, 241, 0.687), rgba(78, 78, 78, 0.578)), url("../../../assets/images/funnel.jpg");
+  background: radial-gradient(rgba(241, 241, 241, 0.687), rgba(78, 78, 78, 0.578)), url("../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -29,7 +29,7 @@
   background: white;
   box-shadow: 3px 17px 32px 0px #828282;
 }
-.container .header {
+.container__header {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -37,11 +37,15 @@
   flex-wrap: nowrap;
   gap: 0.5rem;
 }
-.container .header img {
+.container__header img {
   width: 5rem;
 }
-.container:last-child a,
-.container .reset {
+.container__title {
+  margin-block: 1rem;
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+.container:last-child a, .container__reset {
   display: inline-block;
   cursor: pointer;
   margin-left: 0.5rem;
@@ -49,12 +53,11 @@
   color: #353535;
   font-weight: bold;
 }
-.container:last-child a:hover,
-.container .reset:hover {
+.container:last-child a:hover, .container__reset:hover {
   text-decoration: underline;
 }
 
-.form {
+.container__form {
   flex: 1 1 auto;
   width: 100%;
   display: flex;
@@ -64,7 +67,7 @@
   flex-wrap: nowrap;
   gap: 2rem;
 }
-.form input {
+.container__form input {
   width: 90%;
   height: 2rem;
   font-size: 1rem;
@@ -74,11 +77,11 @@
   border-bottom: 2px solid black;
   background: transparent;
 }
-.form .error {
+.container__form .error {
   background: rgba(211, 118, 118, 0.377);
   border-color: red;
 }
-.form button {
+.container__form button {
   background: transparent;
   cursor: pointer;
   padding: 0.3rem 1.5rem;
@@ -86,9 +89,9 @@
   border: 1px solid rgba(89, 89, 89, 0.87);
   border-radius: 0.2rem;
 }
-.form button:hover {
+.container__form button:hover {
   background: black;
   color: white;
   box-shadow: 3px 3px 32px 0px #828282;
 }
-/*# sourceMappingURL=Login.css.map */
+/*# sourceMappingURL=FormContainer.css.map */

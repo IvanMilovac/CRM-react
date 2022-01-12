@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import Logo from "../../../assets/images/logo.svg";
 
-import "./Login.scss";
+import "../../../scss/components/FormContainer.scss";
 
 const initialFormState = {
   email: "",
@@ -68,11 +68,12 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
+    <div className="container__wrapper">
       <div className="container">
-        <div className="header">
+        <div className="container__header">
           <img src={Logo} alt="brand logo" className="logo" />
         </div>
+        <p className="container__title">Log In</p>
         <ToastContainer
           position="top-center"
           autoClose={7000}
@@ -80,7 +81,7 @@ const Login = () => {
           limit={3}
           transition={Zoom}
         />
-        <form className="form" onSubmit={handleLogin}>
+        <form className="container__form" onSubmit={handleLogin}>
           <Input
             name="email"
             value={email}
@@ -101,7 +102,7 @@ const Login = () => {
         </form>
         <p>
           Forget password?{" "}
-          <span onClick={resetPasswordEmail} className="reset">
+          <span onClick={resetPasswordEmail} className="container__reset">
             Reset
           </span>
         </p>
