@@ -1,3 +1,5 @@
+@use "../../scss/partials/mixins" as m;
+
 .modal {
   z-index: 100;
   position: fixed;
@@ -5,7 +7,16 @@
   top: 50%;
   background: white;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 1rem;
+  width: 400px;
+  max-width: 90%;
+  @include m.border(
+    $width: 0.3rem,
+    $color: rgba(0, 0, 0, 0.95),
+    $radius: 0.5rem,
+    $side: ""
+  );
 }
 
 .modal-enter {
@@ -28,4 +39,14 @@
   transform: translate(-50%, 0%);
   opacity: 0;
   transition: all 200ms;
+}
+
+.modal__header {
+  text-align: center;
+  padding-block: 1rem;
+  @include m.border($side: "-bottom", $width: 2px);
+}
+
+.modal__content {
+  padding: 1rem;
 }

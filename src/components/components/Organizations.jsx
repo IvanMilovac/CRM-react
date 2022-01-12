@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../shared/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import AddOrganizationForm from "./AddOrganizationForm";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
+
+import "./Organization.scss";
 
 const Organizations = () => {
   const [showModal, setShowModal] = useState(false);
+  const [organizationsList, setOrganizationsList] = useState([]);
+
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+      const querySnapshot = await getDocs(collection(db, "organizations"));
+      const array = [];
+      querySnapshot.forEach((doc) => {
+        array.push(doc.data());
+      });
+      setOrganizationsList(array);
+    };
+    fetchOrganizations();
+  }, [showModal]);
+
   return (
     <section>
       <Modal
@@ -13,23 +31,20 @@ const Organizations = () => {
         onCancel={setShowModal}
         className=""
         header="Add organization"
-        headerClass=""
-        footerClass=""
+        contentClass="additionalContentClass"
+        footerClass="additionalFooterClass"
       >
         <AddOrganizationForm setShowModal={setShowModal} />
       </Modal>
+      {organizationsList.map((organization) => (
+        <p key={organization.id}>{organization.name}</p>
+      ))}
       <button
         onClick={() => setShowModal(!showModal)}
-        style={{
-          position: "absolute",
-          bottom: "1rem",
-          right: "1rem",
-          background: "transparent",
-          border: 0,
-          cursor: "pointer",
-        }}
+        className="organization__add-button"
       >
-        <FontAwesomeIcon icon={faPlus} size="3x" color="#000a" />
+        <FontAwesomeIcon icon={faPlus} size="1x" />
+        Add Organization
       </button>
     </section>
   );

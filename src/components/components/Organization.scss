@@ -1,0 +1,68 @@
+@use "../../scss/partials/mixins" as m;
+
+.additionalContentClass form {
+  @include m.flex($dir: column, $gap: 1.2rem);
+  input {
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    padding: 0.2rem 0.5rem;
+    @include m.border($side: "-bottom", $width: 2px);
+    background: transparent;
+  }
+  .css-1s2u09g-control {
+    border-color: black;
+    color: rgb(0, 0, 0);
+    svg {
+      fill: #000;
+    }
+  }
+}
+
+.organization__add-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: white;
+  border: none;
+  @include m.border($side: "", $radius: 0.5rem);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  &:hover {
+    background: black;
+    color: white;
+    -webkit-box-shadow: 3px 3px 32px 0px #828282;
+    box-shadow: 2px 2px 12px 0px #828282;
+  }
+  svg {
+    margin-right: 0.4rem;
+  }
+}
+
+.add-organization__modal-buttons {
+  @include m.flex($gap: 1.25rem);
+  button {
+    background: white;
+    padding: 0.3rem 1.25rem;
+    border: 0;
+    cursor: pointer;
+    @include m.border($side: "", $radius: 0.5rem);
+  }
+  button:first-child {
+    color: green;
+    border-color: green;
+    &:hover {
+      color: white;
+      background: green;
+    }
+  }
+  button:last-child {
+    color: red;
+    border-color: red;
+    &:hover {
+      color: white;
+      background: red;
+    }
+  }
+}

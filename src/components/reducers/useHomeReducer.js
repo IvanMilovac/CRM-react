@@ -1,21 +1,15 @@
 import { useReducer } from "react";
 
-const useHomeReducer = (screenWidth) => {
+const useHomeReducer = (screenWidth, lsNav) => {
   const initialState = {
     drawer: screenWidth > 768,
-    activeLink: "dashboard",
+    activeLink: lsNav || "dashboard",
   };
 
   function reducer(state, action) {
     switch (action.type) {
-      case "ActiveLinkDashboard":
-        return { activeLink: "dashboard", drawer: !state.drawer };
-      case "ActiveLinkOrganizations":
-        return { activeLink: "organizations", drawer: !state.drawer };
-      case "ActiveLinkSales":
-        return { activeLink: "sales", drawer: !state.drawer };
-      case "ActiveLinkOrders":
-        return { activeLink: "orders", drawer: !state.drawer };
+      case "HandleChange":
+        return { activeLink: action.payload, drawer: !state.drawer };
       case "ToggleDrawer":
         return { ...state, drawer: !state.drawer };
       default:

@@ -1,8 +1,10 @@
-import React, { useReducer } from "react";
+import React from "react";
 import Select from "react-select";
 import Input from "../shared/Input";
-
-import "./Form.scss";
+import { useFormData } from "../reducers/useFormData";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
+import { v4 as uuidv4 } from "uuid";
 
 const options = [
   { value: "partner", label: "Partner" },
@@ -13,25 +15,23 @@ const AddOrganizationForm = ({ setShowModal }) => {
   const initialState = {
     name: "",
     industry: "",
-    status: "partner",
+    status: { value: "partner", label: "Partner" },
     contact: "",
   };
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "HandleChange":
-        return { ...state, [action.payload.name]: action.payload.value };
-      default:
-        throw new Error("Error in reducer!");
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
+  const [state, dispatch] = useFormData(initialState);
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        console.log(state);
+        try {
+          const docRef = await addDoc(collection(db, "organizations"), {
+            ...state,
+            id: uuidv4(),
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
         setShowModal(false);
       }}
     >
@@ -59,6 +59,7 @@ const AddOrganizationForm = ({ setShowModal }) => {
         className=""
         required
       />
+      <div></div>
       <div style={{ width: "100%" }}>
         <Select
           name="status"
@@ -84,8 +85,10 @@ const AddOrganizationForm = ({ setShowModal }) => {
         }
         className=""
       />
-      <button type="submit">Save data</button>
-      <button onClick={() => setShowModal(false)}>Close</button>
+      <div className="add-organization__modal-buttons">
+        <button type="submit">Save</button>
+        <button onClick={() => setShowModal(false)}>Close</button>
+      </div>
     </form>
   );
 };

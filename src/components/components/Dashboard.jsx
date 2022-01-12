@@ -11,30 +11,9 @@ const Dashboard = () => {
       });
     }
     getData();
-  }, [data]); 
+  }, [data]); */
 
-  const handleClick = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };*/
-
-  return (
-    <div style={{ flex: "1 1 auto", padding: "2.5%" }}>
-      Dashboard
-      {/* <button onClick={() => handleClick()}>Click Me</button>
-      {data.map((item, index) => (
-        <p key={index}>{item.name}</p>
-      ))} */}
-    </div>
-  );
+  return <div style={{ flex: "1 1 auto", padding: "2.5%" }}>Dashboard</div>;
 };
 
 export default Dashboard;

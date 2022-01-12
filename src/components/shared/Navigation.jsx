@@ -46,19 +46,31 @@ const Navigation = ({ state, dispatch }) => {
         </div>
       </div>
       <ul className="nav__links">
-        <li onClick={() => dispatch({ type: "ActiveLinkDashboard" })}>
+        <li
+          onClick={() =>
+            dispatch({ type: "HandleChange", payload: "dashboard" })
+          }
+        >
           <FontAwesomeIcon icon={faDesktop} />
           Dashboard
         </li>
-        <li onClick={() => dispatch({ type: "ActiveLinkOrganizations" })}>
+        <li
+          onClick={() =>
+            dispatch({ type: "HandleChange", payload: "organizations" })
+          }
+        >
           <FontAwesomeIcon icon={faBuilding} />
           Organizations
         </li>
-        <li onClick={() => dispatch({ type: "ActiveLinkSales" })}>
+        <li
+          onClick={() => dispatch({ type: "HandleChange", payload: "sales" })}
+        >
           <FontAwesomeIcon icon={faDollarSign} />
           Sales
         </li>
-        <li onClick={() => dispatch({ type: "ActiveLinkOrders" })}>
+        <li
+          onClick={() => dispatch({ type: "HandleChange", payload: "orders" })}
+        >
           <FontAwesomeIcon icon={faFile} />
           Orders
         </li>
