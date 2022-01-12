@@ -1,12 +1,20 @@
-import React from "react";
 import Navigation from "../../shared/Navigation";
+import { Dashboard, Organizations, Sales, Orders } from "../../subpages";
+
+import useHomeReducer from "../../reducers/useHomeReducer";
+
 import "./Home.scss";
 
 const Home = () => {
+  const [state, dispatch] = useHomeReducer();
+
   return (
     <main className="home_container">
-      <Navigation />
-      <section></section>
+      <Navigation state={state} dispatch={dispatch} />
+      {state.activeLink === "dashboard" && <Dashboard />}
+      {state.activeLink === "organizations" && <Organizations />}
+      {state.activeLink === "sales" && <Sales />}
+      {state.activeLink === "orders" && <Orders />}
     </main>
   );
 };

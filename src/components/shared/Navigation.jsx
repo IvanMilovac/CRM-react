@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { stringSlicer } from "../../utils/utils";
@@ -18,8 +18,8 @@ import Logo from "../../assets/images/logo.svg";
 
 import "../../scss/components/Navigation.scss";
 
-const Navigation = () => {
-  const [drawer, setDrawer] = useState(true);
+const Navigation = ({ state, dispatch }) => {
+  const { drawer } = state;
   const { logout, currentUser } = useAuth();
   const { email } = currentUser;
 
@@ -27,7 +27,7 @@ const Navigation = () => {
     <nav className={`nav ${!drawer && "hide_nav"}`}>
       <div
         className={`nav__toggle ${!drawer && "rotateClockWise"}`}
-        onClick={() => setDrawer((prevState) => !prevState)}
+        onClick={() => dispatch({ type: "ToggleDrawer" })}
       >
         <FontAwesomeIcon icon={faArrowLeft} size="2x" color="#000a" />
       </div>
@@ -46,19 +46,19 @@ const Navigation = () => {
         </div>
       </div>
       <ul className="nav__links">
-        <li>
+        <li onClick={() => dispatch({ type: "ActiveLinkDashboard" })}>
           <FontAwesomeIcon icon={faDesktop} />
           Dashboard
         </li>
-        <li>
+        <li onClick={() => dispatch({ type: "ActiveLinkOrganizations" })}>
           <FontAwesomeIcon icon={faBuilding} />
           Organizations
         </li>
-        <li>
+        <li onClick={() => dispatch({ type: "ActiveLinkSales" })}>
           <FontAwesomeIcon icon={faDollarSign} />
           Sales
         </li>
-        <li>
+        <li onClick={() => dispatch({ type: "ActiveLinkOrders" })}>
           <FontAwesomeIcon icon={faFile} />
           Orders
         </li>

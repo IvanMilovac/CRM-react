@@ -27,7 +27,7 @@
     }
   }
   &__logo {
-    @include m.flex($main: flex-start);
+    @include m.flex();
     @include m.border($side: "-bottom", $color: rgba(223, 223, 223, 0.781));
     & img {
       width: 120px;
@@ -39,12 +39,7 @@
     flex: 1 1 auto;
     list-style: none;
     padding-block: 2rem;
-    @include m.flex(
-      $dir: column,
-      $main: flex-start,
-      $cross: flex-start,
-      $gap: 1.5rem
-    );
+    @include m.flex($dir: column, $main: flex-start, $gap: 1.5rem);
   }
   &__logout {
     padding: 1rem 3rem;
@@ -73,7 +68,7 @@
     width: initial;
   }
   100% {
-    width: 1.5%;
+    width: 2.5%;
   }
 }
 
