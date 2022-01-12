@@ -1,5 +1,13 @@
 import React from "react";
-const Input = ({ name, value, type = "text", label, onChange, className }) => {
+const Input = ({
+  name,
+  value,
+  type = "text",
+  label,
+  onChange,
+  className,
+  required = false,
+}) => {
   return (
     <>
       <label htmlFor={name}>{label}</label>
@@ -7,9 +15,10 @@ const Input = ({ name, value, type = "text", label, onChange, className }) => {
         type={type}
         name={name}
         value={value}
-        placeholder={name}
+        placeholder={`${name}${required ? " (required)" : ""}`}
         onChange={onChange}
         className={className}
+        required={required}
       />
     </>
   );

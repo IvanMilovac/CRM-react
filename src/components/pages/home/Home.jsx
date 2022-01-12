@@ -1,5 +1,5 @@
 import Navigation from "../../shared/Navigation";
-import { Dashboard, Organizations, Sales, Orders } from "../../subpages";
+import { Dashboard, Organizations, Sales, Orders } from "../../components";
 
 import useHomeReducer from "../../reducers/useHomeReducer";
 
