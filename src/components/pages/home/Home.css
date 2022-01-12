@@ -9,8 +9,8 @@
   gap: 0;
 }
 .home_container section {
-  background: #0000ffaa;
-  width: 85%;
+  background: #ffffffaa;
+  flex: 1 1 auto;
   height: 100%;
 }
 /*# sourceMappingURL=Home.css.map */

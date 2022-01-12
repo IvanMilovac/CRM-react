@@ -5,8 +5,8 @@
   height: 100vh;
   @include m.flex();
   section {
-    background: #0000ffaa;
-    width: 85%;
+    background: #ffffffaa;
+    flex: 1 1 auto;
     height: 100%;
   }
 }

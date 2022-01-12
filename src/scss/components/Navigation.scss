@@ -2,11 +2,25 @@
 
 .nav {
   @include m.flex($dir: column, $main: space-between);
+  position: relative;
   background: #ffffff;
   color: rgb(44, 44, 44);
-  width: 15%;
-  min-width: 220px;
+  width: 19%;
   height: 100%;
+  box-shadow: 0 2px 3px 0px;
+  &__toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 2.5rem;
+    right: -1.15rem;
+    overflow: hidden;
+    background: white;
+    width: 38px;
+    padding: 2px;
+    @include m.border($side: "", $radius: 50%, $color: rgba(0, 0, 0, 0.397));
+    @include m.flex();
+    box-shadow: 0px 0px 7px 1px #4d4c4cce;
+  }
   &__logo {
     @include m.flex($main: flex-start);
     @include m.border($side: "-bottom", $color: rgba(223, 223, 223, 0.781));
@@ -23,21 +37,98 @@
     @include m.flex(
       $dir: column,
       $main: flex-start,
-      $cross: start,
+      $cross: flex-start,
       $gap: 1.5rem
     );
   }
   &__logout {
-    padding-block: 1rem;
+    padding: 1rem 3rem;
     cursor: pointer;
     @include m.border($side: "-top", $color: rgba(223, 223, 223, 0.781));
+    svg {
+      margin-right: 0.3rem;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes rotateArrowClockWise {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(180deg);
+  }
+}
+
+@keyframes rotateArrowCounterClockWise {
+  0% {
+    transform: rotateZ(180deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes navDrawerHide {
+  0% {
+    width: initial;
+  }
+  100% {
+    width: 1.5%;
+  }
+}
+
+@keyframes navDrawerShow {
+  0% {
+    width: 1.5%;
+  }
+  100% {
+    width: initial;
+  }
+}
+
+.rotateClockWise {
+  animation: rotateArrowClockWise 0.2s ease forwards;
+}
+
+.rotateCounterClockWise {
+  animation: rotateArrowCounterClockWise 0.2s ease forwards;
+}
+
+.hide_nav {
+  animation: navDrawerHide 0.15s ease forwards;
+  .nav__toggle {
+    visibility: visible;
+  }
+  .nav__header {
+    visibility: hidden;
+  }
+  .nav__links {
+    visibility: hidden;
+  }
+  .nav__logout {
+    visibility: hidden;
+  }
+}
+.show_nav {
+  animation: navDrawerShow 0.15s ease forwards;
+  .nav__header {
+    visibility: visible;
+  }
+  .nav__links {
+    visibility: visible;
+  }
+  .nav__logout {
+    visibility: visible;
   }
 }
 
 .nav__header {
   width: 100%;
   &-user {
-    padding: 0.5rem;
     @include m.flex($gap: 1rem);
   }
   @include m.border($side: "-bottom", $color: rgba(223, 223, 223, 0.781));
@@ -45,6 +136,7 @@
 
 .nav__header-user {
   margin-block: 1.5rem;
+  padding: 0.5rem 1.5rem;
   &-email {
     font-size: 0.85rem;
   }
@@ -82,5 +174,8 @@
     margin: 0;
     padding: 0.5rem 1rem;
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

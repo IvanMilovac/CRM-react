@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import Avatar from "../../assets/images/avatar.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import {
   faDollarSign,
   faFile,
   faSignOutAlt,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Logo from "../../assets/images/logo.svg";
@@ -15,9 +16,18 @@ import Logo from "../../assets/images/logo.svg";
 import "../../scss/components/Navigation.scss";
 
 const Navigation = () => {
+  const [drawer, setDrawer] = useState(true);
   const { logout } = useAuth();
   return (
-    <nav className="nav">
+    <nav className={`nav ${!drawer ? "hide_nav" : "show_nav"}`}>
+      <div
+        className={`nav__toggle ${
+          !drawer ? "rotateClockWise" : "rotateCounterClockWise"
+        }`}
+        onClick={() => setDrawer((prevState) => !prevState)}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} size="2x" color="#000a" />
+      </div>
       <div className="nav__header">
         <div className="nav__logo">
           <img src={Logo} alt="Logo" />
