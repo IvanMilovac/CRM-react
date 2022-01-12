@@ -1,0 +1,86 @@
+@use "../partials/mixins" as m;
+
+.nav {
+  @include m.flex($dir: column, $main: space-between);
+  background: #ffffff;
+  color: rgb(44, 44, 44);
+  width: 15%;
+  min-width: 220px;
+  height: 100%;
+  &__logo {
+    @include m.flex($main: flex-start);
+    @include m.border($side: "-bottom", $color: rgba(223, 223, 223, 0.781));
+    & img {
+      width: 120px;
+      max-width: 60%;
+      margin-left: 1rem;
+    }
+  }
+  &__links {
+    flex: 1 1 auto;
+    list-style: none;
+    padding-block: 2rem;
+    @include m.flex(
+      $dir: column,
+      $main: flex-start,
+      $cross: start,
+      $gap: 1.5rem
+    );
+  }
+  &__logout {
+    padding-block: 1rem;
+    cursor: pointer;
+    @include m.border($side: "-top", $color: rgba(223, 223, 223, 0.781));
+  }
+}
+
+.nav__header {
+  width: 100%;
+  &-user {
+    padding: 0.5rem;
+    @include m.flex($gap: 1rem);
+  }
+  @include m.border($side: "-bottom", $color: rgba(223, 223, 223, 0.781));
+}
+
+.nav__header-user {
+  margin-block: 1.5rem;
+  &-email {
+    font-size: 0.85rem;
+  }
+  & img {
+    width: 3rem;
+    background: white;
+    @include m.border($side: "", $color: #464668);
+    border-radius: 50%;
+  }
+  &_meta {
+    @include m.flex($dir: column, $gap: 0.5rem);
+  }
+}
+
+.nav__header-user_meta {
+  button {
+    background: white;
+    border: none;
+    @include m.border($side: "");
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    &:hover {
+      background: black;
+      color: white;
+      -webkit-box-shadow: 3px 3px 32px 0px #828282;
+      box-shadow: 2px 2px 12px 0px #828282;
+    }
+  }
+}
+
+.nav__links {
+  li {
+    @include m.flex($gap: 0.3rem);
+    margin: 0;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}

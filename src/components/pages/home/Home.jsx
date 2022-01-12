@@ -1,13 +1,13 @@
 import React from "react";
-import { useAuth } from "../../context/AuthContext";
+import Navigation from "../../shared/Navigation";
+import "./Home.scss";
 
 const Home = () => {
-  const { logout } = useAuth();
   return (
-    <div>
-      <h1>Home component</h1>
-      <button onClick={() => logout()}>Logout</button>
-    </div>
+    <main className="home_container">
+      <Navigation />
+      <section></section>
+    </main>
   );
 };
 

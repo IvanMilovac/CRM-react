@@ -7,7 +7,7 @@
   gap: $gap;
 }
 
-@mixin border($width: 1px, $style: solid, $color: black, $radius: 0) {
-  border: $width $style $color;
+@mixin border($width: 1px, $style: solid, $color: black, $radius: 0, $side) {
+  border#{$side}: $width $style $color;
   border-radius: $radius;
 }

@@ -1,0 +1,12 @@
+@use "../../../scss/partials/mixins" as m;
+
+.home_container {
+  width: 100%;
+  height: 100vh;
+  @include m.flex();
+  section {
+    background: #0000ffaa;
+    width: 85%;
+    height: 100%;
+  }
+}

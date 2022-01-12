@@ -68,7 +68,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container__wrapper">
+    <main className="container__wrapper">
       <div className="container">
         <div className="container__header">
           <img src={Logo} alt="brand logo" className="logo" />
@@ -110,7 +110,7 @@ const Login = () => {
           Don't have account yet? <a href="/signup">Sign up</a>
         </p>
       </div>
-    </div>
+    </main>
   );
 };
 

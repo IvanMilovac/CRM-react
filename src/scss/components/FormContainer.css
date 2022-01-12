@@ -24,7 +24,7 @@
   max-width: 90%;
   height: 500px;
   max-height: 80%;
-  border: 0.3rem solid rgba(0, 0, 0, 0.808);
+  border : 0.3rem solid rgba(0, 0, 0, 0.808);
   border-radius: 0.5rem;
   background: white;
   box-shadow: 3px 17px 32px 0px #828282;
@@ -86,7 +86,7 @@
   cursor: pointer;
   padding: 0.3rem 1.5rem;
   font-size: 1rem;
-  border: 1px solid rgba(89, 89, 89, 0.87);
+  border : 1px solid rgba(89, 89, 89, 0.87);
   border-radius: 0.2rem;
 }
 .container__form button:hover {
