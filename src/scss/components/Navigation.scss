@@ -5,9 +5,8 @@
   position: relative;
   background: #ffffff;
   color: rgb(44, 44, 44);
-  width: 19%;
   height: 100%;
-  box-shadow: 0 2px 3px 0px;
+  box-shadow: 0 2px 4px 0px;
   &__toggle {
     position: absolute;
     cursor: pointer;
@@ -19,7 +18,13 @@
     padding: 2px;
     @include m.border($side: "", $radius: 50%, $color: rgba(0, 0, 0, 0.397));
     @include m.flex();
-    box-shadow: 0px 0px 7px 1px #4d4c4cce;
+    box-shadow: 0px 0px 4px 0px #4d4c4cce;
+    &:hover {
+      background: #000;
+      svg path {
+        fill: white;
+      }
+    }
   }
   &__logo {
     @include m.flex($main: flex-start);
@@ -63,15 +68,6 @@
   }
 }
 
-@keyframes rotateArrowCounterClockWise {
-  0% {
-    transform: rotateZ(180deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-  }
-}
-
 @keyframes navDrawerHide {
   0% {
     width: initial;
@@ -81,21 +77,8 @@
   }
 }
 
-@keyframes navDrawerShow {
-  0% {
-    width: 1.5%;
-  }
-  100% {
-    width: initial;
-  }
-}
-
 .rotateClockWise {
   animation: rotateArrowClockWise 0.2s ease forwards;
-}
-
-.rotateCounterClockWise {
-  animation: rotateArrowCounterClockWise 0.2s ease forwards;
 }
 
 .hide_nav {
@@ -111,18 +94,6 @@
   }
   .nav__logout {
     visibility: hidden;
-  }
-}
-.show_nav {
-  animation: navDrawerShow 0.15s ease forwards;
-  .nav__header {
-    visibility: visible;
-  }
-  .nav__links {
-    visibility: visible;
-  }
-  .nav__logout {
-    visibility: visible;
   }
 }
 

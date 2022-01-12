@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+
+import { stringSlicer } from "../../utils/utils";
+
 import Avatar from "../../assets/images/avatar.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,13 +20,13 @@ import "../../scss/components/Navigation.scss";
 
 const Navigation = () => {
   const [drawer, setDrawer] = useState(true);
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
+  const { email } = currentUser;
+
   return (
-    <nav className={`nav ${!drawer ? "hide_nav" : "show_nav"}`}>
+    <nav className={`nav ${!drawer && "hide_nav"}`}>
       <div
-        className={`nav__toggle ${
-          !drawer ? "rotateClockWise" : "rotateCounterClockWise"
-        }`}
+        className={`nav__toggle ${!drawer && "rotateClockWise"}`}
         onClick={() => setDrawer((prevState) => !prevState)}
       >
         <FontAwesomeIcon icon={faArrowLeft} size="2x" color="#000a" />
@@ -35,7 +38,9 @@ const Navigation = () => {
         <div className="nav__header-user">
           <img src={Avatar} alt="User pic" />
           <div className="nav__header-user_meta">
-            <p className="nav__header-user-email">email@email.com</p>
+            <p className="nav__header-user-email">
+              {email.length > 17 ? stringSlicer(email, 0, 17) : email}
+            </p>
             <button>Change user data</button>
           </div>
         </div>

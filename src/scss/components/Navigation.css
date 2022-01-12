@@ -8,9 +8,8 @@
   position: relative;
   background: #ffffff;
   color: #2c2c2c;
-  width: 19%;
   height: 100%;
-  box-shadow: 0 2px 3px 0px;
+  box-shadow: 0 2px 4px 0px;
 }
 .nav__toggle {
   position: absolute;
@@ -29,7 +28,13 @@
   align-items: center;
   flex-wrap: nowrap;
   gap: 0;
-  box-shadow: 0px 0px 7px 1px #4d4c4cce;
+  box-shadow: 0px 0px 4px 0px #4d4c4cce;
+}
+.nav__toggle:hover {
+  background: #000;
+}
+.nav__toggle:hover svg path {
+  fill: white;
 }
 .nav__logo {
   display: flex;
@@ -87,22 +92,6 @@
     transform: rotateZ(180deg);
   }
 }
-@-webkit-keyframes rotateArrowCounterClockWise {
-  0% {
-    transform: rotateZ(180deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-  }
-}
-@keyframes rotateArrowCounterClockWise {
-  0% {
-    transform: rotateZ(180deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-  }
-}
 @-webkit-keyframes navDrawerHide {
   0% {
     width: initial;
@@ -119,30 +108,9 @@
     width: 1.5%;
   }
 }
-@-webkit-keyframes navDrawerShow {
-  0% {
-    width: 1.5%;
-  }
-  100% {
-    width: initial;
-  }
-}
-@keyframes navDrawerShow {
-  0% {
-    width: 1.5%;
-  }
-  100% {
-    width: initial;
-  }
-}
 .rotateClockWise {
   -webkit-animation: rotateArrowClockWise 0.2s ease forwards;
           animation: rotateArrowClockWise 0.2s ease forwards;
-}
-
-.rotateCounterClockWise {
-  -webkit-animation: rotateArrowCounterClockWise 0.2s ease forwards;
-          animation: rotateArrowCounterClockWise 0.2s ease forwards;
 }
 
 .hide_nav {
@@ -160,20 +128,6 @@
 }
 .hide_nav .nav__logout {
   visibility: hidden;
-}
-
-.show_nav {
-  -webkit-animation: navDrawerShow 0.15s ease forwards;
-          animation: navDrawerShow 0.15s ease forwards;
-}
-.show_nav .nav__header {
-  visibility: visible;
-}
-.show_nav .nav__links {
-  visibility: visible;
-}
-.show_nav .nav__logout {
-  visibility: visible;
 }
 
 .nav__header {
