@@ -11,3 +11,9 @@
   border#{$side}: $width $style $color;
   border-radius: $radius;
 }
+
+@mixin mediaQuery($bp) {
+  @media screen and (max-width: $bp) {
+    @content;
+  }
+}

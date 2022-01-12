@@ -6,7 +6,9 @@ import useHomeReducer from "../../reducers/useHomeReducer";
 import "./Home.scss";
 
 const Home = () => {
-  const [state, dispatch] = useHomeReducer();
+  let intViewportWidth = window.innerWidth;
+
+  const [state, dispatch] = useHomeReducer(intViewportWidth);
 
   return (
     <main className="home_container">

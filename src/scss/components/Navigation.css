@@ -196,4 +196,36 @@
 .nav__links li:hover {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+  .nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+  }
+  .nav__header-user_meta p {
+    font-size: 1.2rem;
+  }
+  .nav__header-user_meta button {
+    font-size: 1rem;
+  }
+  .nav__links {
+    font-size: 1.2rem;
+  }
+  .nav__links li {
+    gap: 0.6rem;
+  }
+  .nav__logout {
+    font-size: 1.2rem;
+  }
+  .nav__logout svg {
+    margin-right: 0.6rem;
+  }
+}
+@media screen and (max-width: 550px) {
+  .nav {
+    width: 90%;
+  }
+}
 /*# sourceMappingURL=Navigation.css.map */

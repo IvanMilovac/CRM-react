@@ -145,3 +145,38 @@
     }
   }
 }
+
+@include m.mediaQuery(768px) {
+  .nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    &__header-user_meta {
+      p {
+        font-size: 1.2rem;
+      }
+      button {
+        font-size: 1rem;
+      }
+    }
+    &__links {
+      font-size: 1.2rem;
+      & li {
+        gap: 0.6rem;
+      }
+    }
+    &__logout {
+      font-size: 1.2rem;
+      & svg {
+        margin-right: 0.6rem;
+      }
+    }
+  }
+}
+
+@include m.mediaQuery(550px) {
+    .nav{
+        width: 90%;
+    }
+}
