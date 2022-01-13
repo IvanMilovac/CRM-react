@@ -113,7 +113,7 @@
     border-radius: 50%;
   }
   &_meta {
-    @include m.flex($dir: column, $gap: 0.5rem);
+    @include m.flex($dir: column, $cross: flex-start, $gap: 0.5rem);
   }
 }
 
@@ -176,7 +176,7 @@
 }
 
 @include m.mediaQuery(550px) {
-    .nav{
-        width: 90%;
-    }
+  .nav {
+    width: 90%;
+  }
 }

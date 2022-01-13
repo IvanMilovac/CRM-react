@@ -1,5 +1,8 @@
 @use "../../scss/partials/mixins" as m;
 
+section {
+  padding: 1.5rem;
+}
 .additionalContentClass form {
   @include m.flex($dir: column, $gap: 1.2rem);
   input {
