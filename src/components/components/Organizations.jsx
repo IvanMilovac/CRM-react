@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { collection, getDocs } from "firebase/firestore";
+import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { collection, doc, query, getDocs, deleteDoc } from "firebase/firestore";
 import Modal from "../shared/Modal";
 import AddOrganizationForm from "./AddOrganizationForm";
 import { db } from "../../firebase-config";
@@ -13,18 +13,35 @@ const Organizations = () => {
   const [showModal, setShowModal] = useState(false);
   const [organizationsList, setOrganizationsList] = useState([]);
 
+  const handleClick = async (e) => {
+    e = e || window.event;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+      target = target.parentNode;
+    }
+    const index = target.getAttribute("dataid");
+    try {
+      await deleteDoc(doc(db, "organizations", index));
+      setOrganizationsList([]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const fetchOrganizations = async () => {
-      const querySnapshot = await getDocs(collection(db, "organizations"));
-      const array = [];
-      querySnapshot.forEach((doc) => {
-        array.push(doc.data());
-      });
-      setOrganizationsList(array);
+      const q = query(collection(db, "organizations"));
+
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setOrganizationsList(data);
     };
     fetchOrganizations();
-  }, [showModal]);
-  console.log(organizationsList);
+  }, [showModal, handleClick]);
+
   const tableData = useMemo(
     () =>
       organizationsList.map((listItem) => ({
@@ -74,55 +91,30 @@ const Organizations = () => {
       <h2>Organizations</h2>
       <table {...getTableProps()}>
         <thead>
-          {
-            // Loop over the header rows
-            headerGroups.map((headerGroup) => (
-              // Apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {
-                  // Loop over the headers in each row
-                  headerGroup.headers.map((column) => (
-                    // Apply the header cell props
-                    <th {...column.getHeaderProps()}>
-                      {
-                        // Render the header
-                        column.render("Header")
-                      }
-                    </th>
-                  ))
-                }
-              </tr>
-            ))
-          }
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        {/* Apply the table body props */}
         <tbody {...getTableBodyProps()}>
-          {
-            // Loop over the table rows
-            rows.map((row) => {
-              // Prepare the row for display
-              prepareRow(row);
-              return (
-                // Apply the row props
-                <tr {...row.getRowProps()}>
-                  {
-                    // Loop over the rows cells
-                    row.cells.map((cell) => {
-                      // Apply the cell props
-                      return (
-                        <td {...cell.getCellProps()}>
-                          {
-                            // Render the cell contents
-                            cell.render("Cell")
-                          }
-                        </td>
-                      );
-                    })
-                  }
-                </tr>
-              );
-            })
-          }
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} dataid={organizationsList[i]?.id}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+                <td onClick={handleClick}>
+                  <FontAwesomeIcon icon={faTrashAlt} color="red" />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <button
