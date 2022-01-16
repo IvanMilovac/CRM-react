@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { collection, doc, query, getDocs, deleteDoc } from "firebase/firestore";
+import { faPlus, faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
+/* import { collection, doc, query, getDocs, deleteDoc } from "firebase/firestore"; */
 import Modal from "../shared/Modal";
 import AddOrganizationForm from "./AddOrganizationForm";
-import { db } from "../../firebase-config";
+import UpdateOrganizationForm from "./UpdateOrganizationForm";
+/* import { db } from "../../firebase-config"; */
 
 import "./Organization.scss";
 
@@ -13,22 +14,8 @@ const Organizations = () => {
   const [showModal, setShowModal] = useState(false);
   const [organizationsList, setOrganizationsList] = useState([]);
 
-  const handleClick = async (e) => {
-    e = e || window.event;
-    var target = e.srcElement || e.target;
-    while (target && target.nodeName !== "TR") {
-      target = target.parentNode;
-    }
-    const index = target.getAttribute("dataid");
-    try {
-      await deleteDoc(doc(db, "organizations", index));
-      setOrganizationsList([]);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
+    /* Fetch Organization data from Firebase 
     const fetchOrganizations = async () => {
       const q = query(collection(db, "organizations"));
 
@@ -37,10 +24,37 @@ const Organizations = () => {
         ...doc.data(),
         id: doc.id,
       }));
+
       setOrganizationsList(data);
     };
-    fetchOrganizations();
-  }, [showModal, handleClick]);
+    fetchOrganizations(); */
+  }, [organizationsList]);
+
+  const handleDeleteClick = async (e) => {
+    e = e || window.event;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+      target = target.parentNode;
+    }
+    /*const index = target.getAttribute("dataid");
+     try {
+      await deleteDoc(doc(db, "organizations", index));
+      setOrganizationsList([]);
+    } catch (e) {
+      console.log(e);
+    } */
+  };
+
+  const handleUpdateClick = (e) => {
+    e = e || window.event;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+      target = target.parentNode;
+    }
+    for (let child in target.children) {
+      console.log(child);
+    }
+  };
 
   const tableData = useMemo(
     () =>
@@ -73,6 +87,7 @@ const Organizations = () => {
     ],
     []
   );
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: tableData });
 
@@ -86,7 +101,21 @@ const Organizations = () => {
         contentClass="additionalContentClass"
         footerClass="additionalFooterClass"
       >
-        <AddOrganizationForm setShowModal={setShowModal} />
+        <AddOrganizationForm
+          setShowModal={setShowModal}
+          organizationsList={organizationsList}
+          setOrganizationsList={setOrganizationsList}
+        />
+      </Modal>
+      <Modal
+        show={showModal}
+        onCancel={setShowModal}
+        className=""
+        header="Update organization"
+        contentClass="additionalContentClass"
+        footerClass="additionalFooterClass"
+      >
+        <UpdateOrganizationForm setShowModal={setShowModal} />
       </Modal>
       <h2>Organizations</h2>
       <table {...getTableProps()}>
@@ -109,8 +138,11 @@ const Organizations = () => {
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
-                <td onClick={handleClick}>
+                <td onClick={() => handleDeleteClick()}>
                   <FontAwesomeIcon icon={faTrashAlt} color="red" />
+                </td>
+                <td onClick={() => handleUpdateClick()}>
+                  <FontAwesomeIcon icon={faPen} color="gray" />
                 </td>
               </tr>
             );

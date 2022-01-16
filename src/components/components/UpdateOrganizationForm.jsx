@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Select from "react-select";
 import Input from "../shared/Input";
 import { useFormData } from "../reducers/useFormData";
 /* import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";*/
+import { db } from "../../firebase-config"; */
 import { v4 as uuidv4 } from "uuid";
 
 const options = [
@@ -11,38 +11,30 @@ const options = [
   { value: "provider", label: "Provider" },
 ];
 
-const AddOrganizationForm = ({
-  setShowModal,
-  setOrganizationsList,
-  organizationsList,
-}) => {
+const AddOrganizationForm = ({ setShowModal }) => {
   const initialState = {
     name: "",
     industry: "",
     status: { value: "partner", label: "Partner" },
     contact: "",
   };
-
   const [state, dispatch] = useFormData(initialState);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    /* try {
-      const docRef = await addDoc(collection(db, "organizations"), {
-        ...state,
-        id: uuidv4(),
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    } */
-    const newOrgsState = [...organizationsList, { ...state, id: uuidv4() }];
-    setOrganizationsList(newOrgsState);
-    setShowModal(false);
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        /* try {
+          const docRef = await addDoc(collection(db, "organizations"), {
+            ...state,
+            id: uuidv4(),
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        } */
+        setShowModal(false);
+      }}
+    >
       <Input
         name="name"
         value={state.name}
