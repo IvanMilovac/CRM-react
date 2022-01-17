@@ -31,7 +31,7 @@ const Modal = (props) => {
       {props.show && <Backdrop onClick={props.onCancel} />}
       <CSSTransition
         nodeRef={myRef}
-        in={props.show}
+        in={!!props.show}
         mountOnEnter
         unmountOnExit
         timeout={200}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Select from "react-select";
 import Input from "../shared/Input";
 import { useFormData } from "../reducers/useFormData";
@@ -12,7 +12,7 @@ const options = [
 ];
 
 const AddOrganizationForm = ({
-  setShowModal,
+  setShowAddModal,
   setOrganizationsList,
   organizationsList,
 }) => {
@@ -27,18 +27,17 @@ const AddOrganizationForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    /* try {
-      const docRef = await addDoc(collection(db, "organizations"), {
-        ...state,
-        id: uuidv4(),
-      });
+    /* 
+    ****Update single doc in Firestore****
+    try {
+      const docRef = await updateDoc(collection(db, "organizations"), {id: uuidv4(),{...state});
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     } */
     const newOrgsState = [...organizationsList, { ...state, id: uuidv4() }];
     setOrganizationsList(newOrgsState);
-    setShowModal(false);
+    setShowAddModal(false);
   };
 
   return (
@@ -95,7 +94,7 @@ const AddOrganizationForm = ({
       />
       <div className="add-organization__modal-buttons">
         <button type="submit">Save</button>
-        <button onClick={() => setShowModal(false)}>Close</button>
+        <button onClick={() => setShowAddModal(false)}>Close</button>
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +11,16 @@ import UpdateOrganizationForm from "./UpdateOrganizationForm";
 import "./Organization.scss";
 
 const Organizations = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [organizationsList, setOrganizationsList] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [organizationsList, setOrganizationsList] = useState(
+    JSON.parse(localStorage.getItem("orgsList")) || []
+  );
+  const [organizationToUpdateId, setOrganizationToUpdateId] = useState();
 
   useEffect(() => {
-    /* Fetch Organization data from Firebase 
+    /* 
+    ****Fetch organization data from Firestore**** 
     const fetchOrganizations = async () => {
       const q = query(collection(db, "organizations"));
 
@@ -28,22 +33,32 @@ const Organizations = () => {
       setOrganizationsList(data);
     };
     fetchOrganizations(); */
+    localStorage.setItem("orgsList", JSON.stringify(organizationsList));
   }, [organizationsList]);
 
-  const handleDeleteClick = async (e) => {
-    e = e || window.event;
-    var target = e.srcElement || e.target;
-    while (target && target.nodeName !== "TR") {
-      target = target.parentNode;
-    }
-    /*const index = target.getAttribute("dataid");
+  const handleDeleteClick = useCallback(
+    async (e) => {
+      e = e || window.event;
+      var target = e.srcElement || e.target;
+      while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+      }
+      const index = target.getAttribute("dataid");
+      const filteredOrganizations = organizationsList.filter(
+        (org) => org.id !== index
+      );
+      setOrganizationsList(filteredOrganizations);
+      /*
+    ****Deleting organization from Firestore****
      try {
       await deleteDoc(doc(db, "organizations", index));
       setOrganizationsList([]);
     } catch (e) {
       console.log(e);
     } */
-  };
+    },
+    [organizationsList]
+  );
 
   const handleUpdateClick = (e) => {
     e = e || window.event;
@@ -51,14 +66,14 @@ const Organizations = () => {
     while (target && target.nodeName !== "TR") {
       target = target.parentNode;
     }
-    for (let child in target.children) {
-      console.log(child);
-    }
+    const index = target.getAttribute("dataid");
+    setOrganizationToUpdateId(index);
+    setShowUpdateModal(true);
   };
 
   const tableData = useMemo(
     () =>
-      organizationsList.map((listItem) => ({
+      organizationsList?.map((listItem) => ({
         name: listItem?.name,
         industry: listItem?.industry,
         contact: listItem?.contact,
@@ -84,8 +99,25 @@ const Organizations = () => {
         Header: "Contact",
         accessor: "contact",
       },
+      {
+        Header: "Delete/Update",
+        Cell: (row) => (
+          <div>
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              color="red"
+              onClick={() => handleDeleteClick()}
+            />
+            <FontAwesomeIcon
+              icon={faPen}
+              color="gray"
+              onClick={() => handleUpdateClick()}
+            />
+          </div>
+        ),
+      },
     ],
-    []
+    [handleDeleteClick]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -94,28 +126,33 @@ const Organizations = () => {
   return (
     <section>
       <Modal
-        show={showModal}
-        onCancel={setShowModal}
+        show={showAddModal}
+        onCancel={setShowAddModal}
         className=""
         header="Add organization"
         contentClass="additionalContentClass"
         footerClass="additionalFooterClass"
       >
         <AddOrganizationForm
-          setShowModal={setShowModal}
+          setShowAddModal={setShowAddModal}
           organizationsList={organizationsList}
           setOrganizationsList={setOrganizationsList}
         />
       </Modal>
       <Modal
-        show={showModal}
-        onCancel={setShowModal}
+        show={showUpdateModal}
+        onCancel={setShowUpdateModal}
         className=""
         header="Update organization"
         contentClass="additionalContentClass"
         footerClass="additionalFooterClass"
       >
-        <UpdateOrganizationForm setShowModal={setShowModal} />
+        <UpdateOrganizationForm
+          setShowUpdateModal={setShowUpdateModal}
+          organizationsList={organizationsList}
+          setOrganizationsList={setOrganizationsList}
+          orgIndex={organizationToUpdateId}
+        />
       </Modal>
       <h2>Organizations</h2>
       <table {...getTableProps()}>
@@ -138,19 +175,13 @@ const Organizations = () => {
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
-                <td onClick={() => handleDeleteClick()}>
-                  <FontAwesomeIcon icon={faTrashAlt} color="red" />
-                </td>
-                <td onClick={() => handleUpdateClick()}>
-                  <FontAwesomeIcon icon={faPen} color="gray" />
-                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
       <button
-        onClick={() => setShowModal(!showModal)}
+        onClick={() => setShowAddModal(!showAddModal)}
         className="organization__add-button"
       >
         <FontAwesomeIcon icon={faPlus} size="1x" />

@@ -4,26 +4,35 @@ import Input from "../shared/Input";
 import { useFormData } from "../reducers/useFormData";
 /* import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase-config"; */
-import { v4 as uuidv4 } from "uuid";
 
 const options = [
   { value: "partner", label: "Partner" },
   { value: "provider", label: "Provider" },
 ];
 
-const AddOrganizationForm = ({ setShowModal }) => {
+const AddOrganizationForm = ({
+  setShowUpdateModal,
+  organizationsList,
+  setOrganizationsList,
+  orgIndex,
+}) => {
+  const organization = organizationsList.filter(
+    (org) => org.id === orgIndex
+  )[0];
   const initialState = {
-    name: "",
-    industry: "",
-    status: { value: "partner", label: "Partner" },
-    contact: "",
+    name: organization.name,
+    industry: organization.industry,
+    status: organization.status,
+    contact: organization.contact,
   };
   const [state, dispatch] = useFormData(initialState);
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        /* try {
+        /*
+        ****Adding new doc in Firestore**** 
+        try {
           const docRef = await addDoc(collection(db, "organizations"), {
             ...state,
             id: uuidv4(),
@@ -32,7 +41,16 @@ const AddOrganizationForm = ({ setShowModal }) => {
         } catch (e) {
           console.error("Error adding document: ", e);
         } */
-        setShowModal(false);
+        let objIndex = organizationsList.findIndex(
+          (obj) => obj.id === orgIndex
+        );
+        const newOrgs = [...organizationsList];
+        newOrgs[objIndex].name = state.name;
+        newOrgs[objIndex].industry = state.industry;
+        newOrgs[objIndex].status = state.status;
+        newOrgs[objIndex].contact = state.contact;
+        setOrganizationsList(newOrgs);
+        setShowUpdateModal(false);
       }}
     >
       <Input
@@ -87,7 +105,7 @@ const AddOrganizationForm = ({ setShowModal }) => {
       />
       <div className="add-organization__modal-buttons">
         <button type="submit">Save</button>
-        <button onClick={() => setShowModal(false)}>Close</button>
+        <button onClick={() => setShowUpdateModal(false)}>Close</button>
       </div>
     </form>
   );

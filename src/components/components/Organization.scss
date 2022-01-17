@@ -1,7 +1,10 @@
 @use "../../scss/partials/mixins" as m;
 
 section {
-  padding: 1.5rem;
+  padding: 1.5rem 2.5rem;
+  h2{
+    padding-block: 1rem;
+  }
 }
 .additionalContentClass form {
   @include m.flex($dir: column, $gap: 1.2rem);
@@ -73,7 +76,7 @@ section {
 table {
   border: 1px solid black;
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
 }
 
 th {
@@ -87,7 +90,11 @@ td {
   padding: 0.3rem 0.9rem;
   border: 1px solid black;
 }
+td:last-child div{
+  display: flex;
+  justify-content: space-evenly;
+}
 
-td:last-child {
+td:last-child div svg {
   cursor: pointer;
 }
