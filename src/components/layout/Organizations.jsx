@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashAlt, faPen } from "@fortawesome/free-solid-svg-icons";
 /* import { collection, doc, query, getDocs, deleteDoc } from "firebase/firestore"; */
 import Modal from "../shared/Modal";
-import AddOrganizationForm from "./AddOrganizationForm";
-import UpdateOrganizationForm from "./UpdateOrganizationForm";
+import AddOrganizationForm from "../components/AddOrganizationForm";
+import UpdateOrganizationForm from "../components/UpdateOrganizationForm";
 /* import { db } from "../../firebase-config"; */
 
 import "./Organization.scss";
@@ -33,7 +33,6 @@ const Organizations = () => {
       setOrganizationsList(data);
     };
     fetchOrganizations(); */
-    localStorage.setItem("orgsList", JSON.stringify(organizationsList));
   }, [organizationsList]);
 
   const handleDeleteClick = useCallback(
@@ -52,7 +51,7 @@ const Organizations = () => {
     ****Deleting organization from Firestore****
      try {
       await deleteDoc(doc(db, "organizations", index));
-      setOrganizationsList([]);
+      setOrganizationsList(filteredOrganizations);
     } catch (e) {
       console.log(e);
     } */
@@ -101,7 +100,7 @@ const Organizations = () => {
       },
       {
         Header: "Delete/Update",
-        Cell: (row) => (
+        Cell: () => (
           <div>
             <FontAwesomeIcon
               icon={faTrashAlt}

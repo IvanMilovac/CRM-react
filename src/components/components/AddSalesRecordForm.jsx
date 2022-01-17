@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Input from "../shared/Input";
 import { useFormData } from "../reducers/useFormData";
@@ -7,15 +7,17 @@ import { db } from "../../firebase-config";*/
 import { v4 as uuidv4 } from "uuid";
 
 const options = [
-  { value: "partner", label: "Partner" },
-  { value: "provider", label: "Provider" },
+  { value: "completed", label: "Completed" },
+  { value: "nagotiation", label: "Nagotiation" },
 ];
 
-const AddOrganizationForm = ({
+const AddSalesRecordForm = ({
   setShowAddModal,
-  setOrganizationsList,
-  organizationsList,
+  salesRecordList,
+  setSalesRecordList,
 }) => {
+  const [companyOptions, setCompanyOptions] = useState([]);
+//FOKUS initial state
   const initialState = {
     name: "",
     industry: "",
@@ -24,6 +26,13 @@ const AddOrganizationForm = ({
   };
 
   const [state, dispatch] = useFormData(initialState);
+  useEffect(() => {
+    setCompanyOptions(
+      JSON.parse(localStorage.getItem("orgsList")).map((item) => {
+        return { value: item?.name, label: item?.name.toLowerCase() };
+      })
+    );
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,8 +44,8 @@ const AddOrganizationForm = ({
     } catch (e) {
       console.error("Error adding document: ", e);
     } */
-    const newOrgsState = [...organizationsList, { ...state, id: uuidv4() }];
-    setOrganizationsList(newOrgsState);
+    const newOrgsState = [...salesRecordList, { ...state, id: uuidv4() }];
+    setSalesRecordList(newOrgsState);
     localStorage.setItem("orgsList", JSON.stringify(newOrgsState));
     setShowAddModal(false);
   };
@@ -55,18 +64,21 @@ const AddOrganizationForm = ({
         className=""
         required
       />
-      <Input
-        name="industry"
-        value={state.industry}
-        onChange={(e) =>
-          dispatch({
-            type: "HandleChange",
-            payload: { name: e.target.name, value: e.target.value },
-          })
-        }
-        className=""
-        required
-      />
+      <div></div>
+      <div style={{ width: "100%" }}>
+        <Select
+          name="company"
+          value={state.company}
+          placeholder="company (required)"
+          options={companyOptions}
+          onChange={(e) =>
+            dispatch({
+              type: "HandleChange",
+              payload: { name: "company", value: e },
+            })
+          }
+        />
+      </div>
       <div></div>
       <div style={{ width: "100%" }}>
         <Select
@@ -83,8 +95,20 @@ const AddOrganizationForm = ({
         />
       </div>
       <Input
-        name="contact"
-        value={state.contact}
+        name="amount"
+        value={state.amount}
+        onChange={(e) =>
+          dispatch({
+            type: "HandleChange",
+            payload: { name: e.target.name, value: e.target.value },
+          })
+        }
+        className=""
+      />
+      <Input
+        name="date"
+        value={state.date}
+        type="date"
         onChange={(e) =>
           dispatch({
             type: "HandleChange",
@@ -101,4 +125,4 @@ const AddOrganizationForm = ({
   );
 };
 
-export default AddOrganizationForm;
+export default AddSalesRecordForm;

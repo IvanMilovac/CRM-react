@@ -10,14 +10,14 @@ const options = [
   { value: "provider", label: "Provider" },
 ];
 
-const AddOrganizationForm = ({
+const AddSalesRecordForm = ({
   setShowUpdateModal,
-  organizationsList,
-  setOrganizationsList,
-  orgIndex,
+  salesRecordList,
+  setSalesRecordList,
+  recordIndex,
 }) => {
-  const organization = organizationsList.filter(
-    (org) => org.id === orgIndex
+  const organization = salesRecordList.filter(
+    (org) => org.id === recordIndex
   )[0];
   const initialState = {
     name: organization.name,
@@ -41,15 +41,15 @@ const AddOrganizationForm = ({
         } catch (e) {
           console.error("Error adding document: ", e);
         } */
-        let objIndex = organizationsList.findIndex(
-          (obj) => obj.id === orgIndex
+        let objIndex = salesRecordList.findIndex(
+          (obj) => obj.id === recordIndex
         );
-        const newOrgs = [...organizationsList];
+        const newOrgs = [...salesRecordList];
         newOrgs[objIndex].name = state.name;
         newOrgs[objIndex].industry = state.industry;
         newOrgs[objIndex].status = state.status;
         newOrgs[objIndex].contact = state.contact;
-        setOrganizationsList(newOrgs);
+        setSalesRecordList(newOrgs);
         localStorage.setItem("orgsList", JSON.stringify(newOrgs));
         setShowUpdateModal(false);
       }}
@@ -112,4 +112,4 @@ const AddOrganizationForm = ({
   );
 };
 
-export default AddOrganizationForm;
+export default AddSalesRecordForm;

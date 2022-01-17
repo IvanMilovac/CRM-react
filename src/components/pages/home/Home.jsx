@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Navigation from "../../shared/Navigation";
-import { Dashboard, Organizations, Sales, Orders } from "../../components";
+import { Dashboard, Organizations, Sales, Orders } from "../../layout";
 
 import useHomeReducer from "../../reducers/useHomeReducer";
 
@@ -14,7 +14,7 @@ const Home = () => {
   );
   useEffect(() => {
     localStorage.setItem("home-navigation", state.activeLink);
-    return () => localStorage.clear();
+    return () => localStorage.removeItem("home-navigation");
   }, [state.activeLink]);
   return (
     <main className="home_container">
