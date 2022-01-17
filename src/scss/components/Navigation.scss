@@ -7,6 +7,7 @@
   color: rgb(44, 44, 44);
   height: 100%;
   box-shadow: 0 2px 4px 0px;
+  z-index: 999;
   &__toggle {
     position: absolute;
     cursor: pointer;

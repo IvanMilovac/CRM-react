@@ -1,5 +1,9 @@
 section {
   padding: 1.5rem 2.5rem;
+  overflow-x: auto;
+}
+section h2 {
+  padding-block: 1rem;
 }
 
 .additionalContentClass form {

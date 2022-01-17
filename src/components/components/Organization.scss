@@ -2,7 +2,8 @@
 
 section {
   padding: 1.5rem 2.5rem;
-  h2{
+  overflow-x: auto;
+  h2 {
     padding-block: 1rem;
   }
 }
@@ -90,7 +91,7 @@ td {
   padding: 0.3rem 0.9rem;
   border: 1px solid black;
 }
-td:last-child div{
+td:last-child div {
   display: flex;
   justify-content: space-evenly;
 }
