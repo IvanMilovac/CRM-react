@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import Input from "../shared/Input";
 import { useFormData } from "../reducers/useFormData";
@@ -6,24 +6,32 @@ import { useFormData } from "../reducers/useFormData";
 import { db } from "../../firebase-config"; */
 
 const options = [
-  { value: "partner", label: "Partner" },
-  { value: "provider", label: "Provider" },
+  { value: "completed", label: "Completed" },
+  { value: "nagotiation", label: "Nagotiation" },
 ];
 
-const AddSalesRecordForm = ({
+const UpdateSalesRecordForm = ({
   setShowUpdateModal,
   salesRecordList,
   setSalesRecordList,
   recordIndex,
 }) => {
-  const organization = salesRecordList.filter(
-    (org) => org.id === recordIndex
-  )[0];
+  const [companyOptions, setCompanyOptions] = useState([]);
+
+  useEffect(() => {
+    setCompanyOptions(
+      JSON.parse(localStorage.getItem("orgsList")).map((item) => {
+        return { label: item?.name, value: item?.name.toLowerCase() };
+      })
+    );
+  }, []);
+  const record = salesRecordList.filter((org) => org.id === recordIndex)[0];
   const initialState = {
-    name: organization.name,
-    industry: organization.industry,
-    status: organization.status,
-    contact: organization.contact,
+    name: record?.name,
+    company: record?.company?.value,
+    status: record?.status?.value,
+    amount: record?.amount,
+    date: record?.date,
   };
   const [state, dispatch] = useFormData(initialState);
   return (
@@ -44,13 +52,14 @@ const AddSalesRecordForm = ({
         let objIndex = salesRecordList.findIndex(
           (obj) => obj.id === recordIndex
         );
-        const newOrgs = [...salesRecordList];
-        newOrgs[objIndex].name = state.name;
-        newOrgs[objIndex].industry = state.industry;
-        newOrgs[objIndex].status = state.status;
-        newOrgs[objIndex].contact = state.contact;
-        setSalesRecordList(newOrgs);
-        localStorage.setItem("orgsList", JSON.stringify(newOrgs));
+        const newRecord = [...salesRecordList];
+        newRecord[objIndex].name = state.name;
+        newRecord[objIndex].company = state.company;
+        newRecord[objIndex].status = state.status;
+        newRecord[objIndex].amount = state.amount;
+        newRecord[objIndex].date = state.date;
+        setSalesRecordList(newRecord);
+        localStorage.setItem("salesList", JSON.stringify(newRecord));
         setShowUpdateModal(false);
       }}
     >
@@ -66,18 +75,21 @@ const AddSalesRecordForm = ({
         className=""
         required
       />
-      <Input
-        name="industry"
-        value={state.industry}
-        onChange={(e) =>
-          dispatch({
-            type: "HandleChange",
-            payload: { name: e.target.name, value: e.target.value },
-          })
-        }
-        className=""
-        required
-      />
+      <div></div>
+      <div style={{ width: "100%" }}>
+        <Select
+          name="company"
+          value={state.company}
+          placeholder="company (required)"
+          options={companyOptions}
+          onChange={(e) =>
+            dispatch({
+              type: "HandleChange",
+              payload: { name: "company", value: e },
+            })
+          }
+        />
+      </div>
       <div></div>
       <div style={{ width: "100%" }}>
         <Select
@@ -94,8 +106,20 @@ const AddSalesRecordForm = ({
         />
       </div>
       <Input
-        name="contact"
-        value={state.contact}
+        name="amount"
+        value={state.amount}
+        onChange={(e) =>
+          dispatch({
+            type: "HandleChange",
+            payload: { name: e.target.name, value: e.target.value },
+          })
+        }
+        className=""
+      />
+      <Input
+        name="date"
+        value={state.date}
+        type="date"
         onChange={(e) =>
           dispatch({
             type: "HandleChange",
@@ -112,4 +136,4 @@ const AddSalesRecordForm = ({
   );
 };
 
-export default AddSalesRecordForm;
+export default UpdateSalesRecordForm;

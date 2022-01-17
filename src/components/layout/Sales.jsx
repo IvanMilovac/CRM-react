@@ -30,6 +30,7 @@ const Sales = () => {
       setOrganizationsList(data);
     };
     fetchOrganizations(); */
+    console.log("SR List: ", salesRecordList);
   }, [salesRecordList]);
 
   const handleDeleteClick = useCallback(
@@ -69,8 +70,8 @@ const Sales = () => {
     () =>
       salesRecordList?.map((listItem) => ({
         name: listItem?.name,
-        company: listItem?.company,
-        status: listItem?.status,
+        company: listItem?.company?.value,
+        status: listItem?.status?.value,
         amount: listItem?.amount,
         date: listItem?.date,
       })),

@@ -17,12 +17,13 @@ const AddSalesRecordForm = ({
   setSalesRecordList,
 }) => {
   const [companyOptions, setCompanyOptions] = useState([]);
-//FOKUS initial state
+
+  const today = new Date();
+
   const initialState = {
     name: "",
-    industry: "",
-    status: { value: "partner", label: "Partner" },
-    contact: "",
+    amount: "",
+    date: `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`,
   };
 
   const [state, dispatch] = useFormData(initialState);
@@ -39,14 +40,14 @@ const AddSalesRecordForm = ({
     /* 
     ****Update single doc in Firestore****
     try {
-      const docRef = await updateDoc(collection(db, "organizations"), {id: uuidv4(),{...state});
+      const docRef = await updateDoc(collection(db, "sales"), {id: uuidv4(),{...state});
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     } */
-    const newOrgsState = [...salesRecordList, { ...state, id: uuidv4() }];
-    setSalesRecordList(newOrgsState);
-    localStorage.setItem("orgsList", JSON.stringify(newOrgsState));
+    const newSRState = [...salesRecordList, { ...state, id: uuidv4() }];
+    setSalesRecordList(newSRState);
+    localStorage.setItem("salesList", JSON.stringify(newSRState));
     setShowAddModal(false);
   };
 
