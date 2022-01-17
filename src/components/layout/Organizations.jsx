@@ -47,6 +47,7 @@ const Organizations = () => {
         (org) => org.id !== index
       );
       setOrganizationsList(filteredOrganizations);
+      localStorage.setItem("orgsList", JSON.stringify(filteredOrganizations));
       /*
     ****Deleting organization from Firestore****
      try {
