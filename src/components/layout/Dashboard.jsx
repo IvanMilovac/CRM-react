@@ -20,6 +20,8 @@ const Dashboard = () => {
     total: 0,
   });
 
+  const [noData, setNoData] = useState(false);
+
   const orgsReducer = (prevValue, currValue) => {
     if (currValue.status.value === "partner")
       return {
@@ -70,12 +72,14 @@ const Dashboard = () => {
     };
   };
 
-  console.log(ordersData);
-
   useEffect(() => {
     let organizations = JSON.parse(localStorage.getItem("orgsList")) || [];
     let sales = JSON.parse(localStorage.getItem("salesList")) || [];
     let orders = JSON.parse(localStorage.getItem("ordersList")) || [];
+
+    setNoData(!sales.length && !orders.length);
+
+    console.log(!!sales.length && !!orders.length);
 
     let statOrgs = organizations.reduce(orgsReducer, organizationData);
     let statsSales = sales.reduce(salesReducer, salesData);
@@ -86,24 +90,14 @@ const Dashboard = () => {
     setOrdersData(statsOrders);
   }, []);
 
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridTemplaterows: "1fr 1fr",
-    gridTemplateAreas: '"basic basic" "sales orders"',
-    gap: "10%",
-    width: "100%",
-    height: "100%",
-  };
-
   return (
-    <section style={{ maxHeight: "100vh", overflowY: "hidden" }}>
+    <section>
       <h2>CRM Dashboard</h2>
-      <div className="dashboard__container" style={gridStyle}>
-        <div className="dashboard__basic--info" style={{ gridArea: "basic" }}>
+      <div className="dashboard__container">
+        <div className={`dashboard__basic--info ${noData ? "" : "overflow-x"}`}>
           <table>
-            <thead style={{ width: "100%" }}>
-              <tr style={{ background: "#222", color: "#fff" }}>
+            <thead>
+              <tr>
                 <th># of partners</th>
                 <th># of providers</th>
                 <th>Sales</th>
@@ -130,87 +124,67 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-        <div
-          className="dashboard__sales"
-          style={{
-            display: "flex",
-            gap: "1rem",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gridArea: "sales",
-          }}
-        >
-          <h3 style={{ width: "max-content" }}>Sales results:</h3>
-          <PieChart
-            animate
-            animationDuration={500}
-            animationEasing="ease-out"
-            data={[
-              {
-                title: "Delivery",
-                value: salesData?.delivery,
-                color: "#dd3300",
-              },
-              {
-                title: "Completed",
-                value: salesData?.completed,
-                color: "#00ef11",
-              },
-            ]}
-            viewBoxSize={[100, 100]}
-            label={(data) => data.dataEntry.title}
-            labelPosition={65}
-            labelStyle={{
-              fontSize: "6px",
-              fontWeight: "600",
-              color: "white",
-            }}
-          />
-        </div>
-        <div
-          className="dashboard__orders"
-          style={{
-            display: "flex",
-            gap: "1rem",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gridArea: "orders",
-          }}
-        >
-          <h3 style={{ width: "max-content" }}>Orders results:</h3>
-          <PieChart
-            animate
-            animationDuration={500}
-            animationEasing="ease-out"
-            data={[
-              {
-                title: "Info Quotes",
-                value: ordersData?.nagotiation,
-                color: "#dd3300",
-              },
-              {
-                title: "Nagotiations",
-                value: ordersData?.infoquote,
-                color: "#aa4400",
-              },
-              {
-                title: "Bids",
-                value: ordersData?.bid,
-                color: "#00ef11",
-              },
-            ]}
-            viewBoxSize={[100, 100]}
-            label={(data) => data.dataEntry.title}
-            labelPosition={65}
-            labelStyle={{
-              fontSize: "6px",
-              fontWeight: "600",
-              color: "white",
-            }}
-          />
-        </div>
+        {!noData && (
+          <>
+            <div className="dashboard__sales">
+              <h3>Sales results:</h3>
+              <PieChart
+                animate
+                animationDuration={500}
+                animationEasing="ease-out"
+                data={[
+                  {
+                    title: "Delivery",
+                    value: salesData?.delivery,
+                    color: "#dd3300",
+                  },
+                  {
+                    title: "Completed",
+                    value: salesData?.completed,
+                    color: "#00ef11",
+                  },
+                ]}
+                label={(data) => data.dataEntry.title}
+                labelStyle={{
+                  fontSize: "6px",
+                  fontWeight: "600",
+                  color: "white",
+                }}
+              />
+            </div>
+            <div className="dashboard__orders">
+              <h3>Orders results:</h3>
+              <PieChart
+                animate
+                animationDuration={500}
+                animationEasing="ease-out"
+                data={[
+                  {
+                    title: "Info Quotes",
+                    value: ordersData?.nagotiation,
+                    color: "#dd3300",
+                  },
+                  {
+                    title: "Nagotiations",
+                    value: ordersData?.infoquote,
+                    color: "#aa4400",
+                  },
+                  {
+                    title: "Bids",
+                    value: ordersData?.bid,
+                    color: "#00ef11",
+                  },
+                ]}
+                label={(data) => data.dataEntry.title}
+                labelStyle={{
+                  fontSize: "6px",
+                  fontWeight: "600",
+                  color: "white",
+                }}
+              />
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
