@@ -30,7 +30,7 @@ const AddSalesRecordForm = ({
   useEffect(() => {
     setCompanyOptions(
       JSON.parse(localStorage.getItem("orgsList")).map((item) => {
-        return { value: item?.name, label: item?.name.toLowerCase() };
+        return { label: item?.name, value: item?.name.toLowerCase() };
       })
     );
   }, []);

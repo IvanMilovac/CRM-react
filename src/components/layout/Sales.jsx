@@ -30,7 +30,6 @@ const Sales = () => {
       setOrganizationsList(data);
     };
     fetchOrganizations(); */
-    console.log("SR List: ", salesRecordList);
   }, [salesRecordList]);
 
   const handleDeleteClick = useCallback(
@@ -43,6 +42,7 @@ const Sales = () => {
       const index = target.getAttribute("dataid");
       const filteredRecords = salesRecordList.filter((org) => org.id !== index);
       setSalesRecordList(filteredRecords);
+      localStorage.setItem("salesList", JSON.stringify(filteredRecords));
       /*
     ****Deleting sales record from Firestore****
      try {
@@ -70,8 +70,8 @@ const Sales = () => {
     () =>
       salesRecordList?.map((listItem) => ({
         name: listItem?.name,
-        company: listItem?.company?.value,
-        status: listItem?.status?.value,
+        company: listItem?.company?.label,
+        status: listItem?.status?.label,
         amount: listItem?.amount,
         date: listItem?.date,
       })),
@@ -144,7 +144,7 @@ const Sales = () => {
         show={showUpdateModal}
         onCancel={setShowUpdateModal}
         className=""
-        header="Update organization"
+        header="Update record"
         contentClass="additionalContentClass"
         footerClass="additionalFooterClass"
       >

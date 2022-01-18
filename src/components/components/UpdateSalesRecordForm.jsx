@@ -28,17 +28,17 @@ const UpdateSalesRecordForm = ({
   const record = salesRecordList.filter((org) => org.id === recordIndex)[0];
   const initialState = {
     name: record?.name,
-    company: record?.company?.value,
-    status: record?.status?.value,
+    company: record?.company,
+    status: options.filter((item) => item?.label === record?.status?.label)[0],
     amount: record?.amount,
     date: record?.date,
   };
+
   const [state, dispatch] = useFormData(initialState);
-  return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        /*
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    /*
         ****Adding new doc in Firestore**** 
         try {
           const docRef = await addDoc(collection(db, "organizations"), {
@@ -49,20 +49,20 @@ const UpdateSalesRecordForm = ({
         } catch (e) {
           console.error("Error adding document: ", e);
         } */
-        let objIndex = salesRecordList.findIndex(
-          (obj) => obj.id === recordIndex
-        );
-        const newRecord = [...salesRecordList];
-        newRecord[objIndex].name = state.name;
-        newRecord[objIndex].company = state.company;
-        newRecord[objIndex].status = state.status;
-        newRecord[objIndex].amount = state.amount;
-        newRecord[objIndex].date = state.date;
-        setSalesRecordList(newRecord);
-        localStorage.setItem("salesList", JSON.stringify(newRecord));
-        setShowUpdateModal(false);
-      }}
-    >
+    let objIndex = salesRecordList.findIndex((obj) => obj.id === recordIndex);
+    const newRecords = [...salesRecordList];
+    newRecords[objIndex].name = state.name;
+    newRecords[objIndex].company = state.company;
+    newRecords[objIndex].status = state.status;
+    newRecords[objIndex].amount = state.amount;
+    newRecords[objIndex].date = state.date;
+    setSalesRecordList(newRecords);
+    localStorage.setItem("salesList", JSON.stringify(newRecords));
+    setShowUpdateModal(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
       <Input
         name="name"
         value={state.name}
