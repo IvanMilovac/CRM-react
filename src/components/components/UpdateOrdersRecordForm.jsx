@@ -6,14 +6,15 @@ import { useFormData } from "../reducers/useFormData";
 import { db } from "../../firebase-config"; */
 
 const options = [
-  { value: "completed", label: "Completed" },
+  { value: "infoquote", label: "Informative quote" },
   { value: "nagotiation", label: "Nagotiation" },
+  { value: "quote", label: "Quote" },
 ];
 
 const UpdateSalesRecordForm = ({
   setShowUpdateModal,
-  salesRecordList,
-  setSalesRecordList,
+  ordersRecordList,
+  setOrdersRecordList,
   recordIndex,
 }) => {
   const [companyOptions, setCompanyOptions] = useState([]);
@@ -25,8 +26,8 @@ const UpdateSalesRecordForm = ({
       })
     );
   }, []);
-  
-  const record = salesRecordList.filter((org) => org.id === recordIndex)[0];
+
+  const record = ordersRecordList.filter((org) => org.id === recordIndex)[0];
 
   const initialState = {
     name: record?.name,
@@ -43,7 +44,7 @@ const UpdateSalesRecordForm = ({
     /*
         ****Adding new doc in Firestore**** 
         try {
-          const docRef = await addDoc(collection(db, "sales"), {
+          const docRef = await addDoc(collection(db, "orders"), {
             ...state,
             id: uuidv4(),
           });
@@ -51,15 +52,15 @@ const UpdateSalesRecordForm = ({
         } catch (e) {
           console.error("Error adding document: ", e);
         } */
-    let objIndex = salesRecordList.findIndex((obj) => obj.id === recordIndex);
-    const newRecords = [...salesRecordList];
+    let objIndex = ordersRecordList.findIndex((obj) => obj.id === recordIndex);
+    const newRecords = [...ordersRecordList];
     newRecords[objIndex].name = state.name;
     newRecords[objIndex].company = state.company;
     newRecords[objIndex].status = state.status;
     newRecords[objIndex].amount = state.amount;
     newRecords[objIndex].date = state.date;
-    setSalesRecordList(newRecords);
-    localStorage.setItem("salesList", JSON.stringify(newRecords));
+    setOrdersRecordList(newRecords);
+    localStorage.setItem("ordersList", JSON.stringify(newRecords));
     setShowUpdateModal(false);
   };
 
