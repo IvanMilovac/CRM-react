@@ -70,7 +70,11 @@ const Signup = () => {
           limit={3}
           transition={Zoom}
         />
-        <form className="container__form" onSubmit={handleSignup}>
+        <form
+          className="container__form"
+          onSubmit={handleSignup}
+          autoComplete="off"
+        >
           <Input
             name="email"
             value={email}

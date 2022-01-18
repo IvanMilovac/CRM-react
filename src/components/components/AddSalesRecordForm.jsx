@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const options = [
   { value: "completed", label: "Completed" },
-  { value: "nagotiation", label: "Nagotiation" },
+  { value: "delivery", label: "Delivery" },
 ];
 
 const AddSalesRecordForm = ({
@@ -46,6 +46,7 @@ const AddSalesRecordForm = ({
       console.error("Error adding document: ", e);
     } */
     const newSRState = [...salesRecordList, { ...state, id: uuidv4() }];
+    console.log(newSRState);
     setSalesRecordList(newSRState);
     localStorage.setItem("salesList", JSON.stringify(newSRState));
     setShowAddModal(false);

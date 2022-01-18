@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 const options = [
   { value: "infoquote", label: "Informative quote" },
   { value: "nagotiation", label: "Nagotiation" },
-  { value: "quote", label: "Quote" },
+  { value: "bid", label: "Bid" },
 ];
 
 const AddOrdersRecordForm = ({
@@ -18,8 +18,6 @@ const AddOrdersRecordForm = ({
   setOrdersRecordList,
 }) => {
   const [companyOptions, setCompanyOptions] = useState([]);
-
-
 
   const today = new Date();
 
@@ -82,6 +80,7 @@ const AddOrdersRecordForm = ({
               payload: { name: "company", value: e },
             })
           }
+          required
         />
       </div>
       <div></div>
@@ -97,6 +96,7 @@ const AddOrdersRecordForm = ({
               payload: { name: "status", value: e },
             })
           }
+          required
         />
       </div>
       <Input
@@ -109,6 +109,7 @@ const AddOrdersRecordForm = ({
           })
         }
         className=""
+        required
       />
       <Input
         name="date"
@@ -121,6 +122,7 @@ const AddOrdersRecordForm = ({
           })
         }
         className=""
+        requires
       />
       <div className="add-organization__modal-buttons">
         <button type="submit">Save</button>

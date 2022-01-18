@@ -7,7 +7,7 @@ import { db } from "../../firebase-config"; */
 
 const options = [
   { value: "completed", label: "Completed" },
-  { value: "nagotiation", label: "Nagotiation" },
+  { value: "delivery", label: "Delivery" },
 ];
 
 const UpdateSalesRecordForm = ({
@@ -25,7 +25,7 @@ const UpdateSalesRecordForm = ({
       })
     );
   }, []);
-  
+
   const record = salesRecordList.filter((org) => org.id === recordIndex)[0];
 
   const initialState = {
