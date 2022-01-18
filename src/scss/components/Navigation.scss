@@ -55,6 +55,21 @@
   }
 }
 
+form button {
+  background: white;
+  border: none;
+  @include m.border($side: "");
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  &:hover {
+    background: black;
+    color: white;
+    -webkit-box-shadow: 3px 3px 32px 0px #828282;
+    box-shadow: 2px 2px 12px 0px #828282;
+  }
+}
+
 @keyframes rotateArrowClockWise {
   0% {
     transform: rotateZ(0deg);

@@ -6,6 +6,7 @@ const Input = ({
   label,
   onChange,
   className,
+  autocomplete,
   required = false,
 }) => {
   return (
@@ -14,6 +15,7 @@ const Input = ({
       <input
         type={type}
         name={name}
+        autoComplete={autocomplete}
         value={value}
         placeholder={`${name}${required ? " (required)" : ""}`}
         onChange={onChange}

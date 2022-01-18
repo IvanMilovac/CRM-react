@@ -93,6 +93,7 @@ const Login = () => {
             name="password"
             value={password}
             type="password"
+            autocomplete="current-password"
             onChange={handleChange}
             className={`${error && "error"}`}
           />
