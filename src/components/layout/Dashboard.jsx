@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { PieChart } from "react-minimal-pie-chart";
+
+import "./Dashboard.scss";
+
 const Dashboard = () => {
   const [organizationData, setOrganizationData] = useState({
     partner: 0,
     provider: 0,
   });
-  const [salesData, setSalesData] = useState(0);
-  const [ordersData, setOrdersData] = useState(0);
+  const [salesData, setSalesData] = useState({
+    delivery: 0,
+    completed: 0,
+    total: 0,
+  });
+  const [ordersData, setOrdersData] = useState({
+    infoquote: 0,
+    nagotiation: 0,
+    bid: 0,
+    total: 0,
+  });
 
   const orgsReducer = (prevValue, currValue) => {
     if (currValue.status.value === "partner")
@@ -20,16 +32,50 @@ const Dashboard = () => {
     };
   };
 
-  const salesReducer = (prevValue, currValue) =>
-    prevValue + Number(currValue.amount);
+  const salesReducer = (prevValue, currValue) => {
+    if (currValue?.status?.value === "delivery")
+      return {
+        delivery: prevValue?.delivery + Number(currValue?.amount),
+        completed: prevValue?.completed,
+        total: prevValue?.total + Number(currValue?.amount),
+      };
 
-  const ordersReducer = (prevValue, currValue) =>
-    prevValue + Number(currValue.amount);
+    return {
+      delivery: prevValue?.delivery,
+      completed: prevValue?.completed + Number(currValue?.amount),
+      total: prevValue?.total + Number(currValue?.amount),
+    };
+  };
+
+  const ordersReducer = (prevValue, currValue) => {
+    if (currValue?.status?.value === "infoquote")
+      return {
+        infoquote: prevValue?.infoquote + Number(currValue?.amount),
+        nagotiation: prevValue?.nagotiation,
+        bid: prevValue?.bid,
+        total: prevValue?.total + Number(currValue?.amount),
+      };
+    else if (currValue?.status?.value === "nagotiation")
+      return {
+        infoquote: prevValue?.infoquote,
+        nagotiation: prevValue?.nagotiation + Number(currValue?.amount),
+        bid: prevValue?.bid,
+        total: prevValue?.total + Number(currValue?.amount),
+      };
+    return {
+      infoquote: prevValue?.infoquote,
+      nagotiation: prevValue?.nagotiation,
+      bid: prevValue?.bid + Number(currValue?.amount),
+      total: prevValue?.total + Number(currValue?.amount),
+    };
+  };
+
+  console.log(ordersData);
 
   useEffect(() => {
-    let organizations = JSON.parse(localStorage.getItem("orgsList"));
-    let sales = JSON.parse(localStorage.getItem("salesList"));
-    let orders = JSON.parse(localStorage.getItem("ordersList"));
+    let organizations = JSON.parse(localStorage.getItem("orgsList")) || [];
+    let sales = JSON.parse(localStorage.getItem("salesList")) || [];
+    let orders = JSON.parse(localStorage.getItem("ordersList")) || [];
 
     let statOrgs = organizations.reduce(orgsReducer, organizationData);
     let statsSales = sales.reduce(salesReducer, salesData);
@@ -69,13 +115,13 @@ const Dashboard = () => {
                 <td>{organizationData.partner}</td>
                 <td>{organizationData.provider}</td>
                 <td>
-                  {salesData?.toLocaleString("de-DE", {
+                  {salesData?.total?.toLocaleString("de-DE", {
                     style: "currency",
                     currency: "EUR",
                   })}
                 </td>
                 <td>
-                  {ordersData?.toLocaleString("de-DE", {
+                  {ordersData?.total?.toLocaleString("de-DE", {
                     style: "currency",
                     currency: "EUR",
                   })}
@@ -97,12 +143,29 @@ const Dashboard = () => {
         >
           <h3 style={{ width: "max-content" }}>Sales results:</h3>
           <PieChart
-            style={{ height: "max-content" }}
+            animate
+            animationDuration={500}
+            animationEasing="ease-out"
             data={[
-              { title: "One", value: 10, color: "#E38627" },
-              { title: "Two", value: 15, color: "#C13C37" },
-              { title: "Three", value: 20, color: "#6A2135" },
+              {
+                title: "Delivery",
+                value: salesData?.delivery,
+                color: "#dd3300",
+              },
+              {
+                title: "Completed",
+                value: salesData?.completed,
+                color: "#00ef11",
+              },
             ]}
+            viewBoxSize={[100, 100]}
+            label={(data) => data.dataEntry.title}
+            labelPosition={65}
+            labelStyle={{
+              fontSize: "6px",
+              fontWeight: "600",
+              color: "white",
+            }}
           />
         </div>
         <div
@@ -118,12 +181,34 @@ const Dashboard = () => {
         >
           <h3 style={{ width: "max-content" }}>Orders results:</h3>
           <PieChart
-            style={{ height: "max-content" }}
+            animate
+            animationDuration={500}
+            animationEasing="ease-out"
             data={[
-              { title: "One", value: 10, color: "#E38627" },
-              { title: "Two", value: 15, color: "#C13C37" },
-              { title: "Three", value: 20, color: "#6A2135" },
+              {
+                title: "Info Quotes",
+                value: ordersData?.nagotiation,
+                color: "#dd3300",
+              },
+              {
+                title: "Nagotiations",
+                value: ordersData?.infoquote,
+                color: "#aa4400",
+              },
+              {
+                title: "Bids",
+                value: ordersData?.bid,
+                color: "#00ef11",
+              },
             ]}
+            viewBoxSize={[100, 100]}
+            label={(data) => data.dataEntry.title}
+            labelPosition={65}
+            labelStyle={{
+              fontSize: "6px",
+              fontWeight: "600",
+              color: "white",
+            }}
           />
         </div>
       </div>
