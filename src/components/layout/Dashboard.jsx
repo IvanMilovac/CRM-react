@@ -77,9 +77,7 @@ const Dashboard = () => {
     let sales = JSON.parse(localStorage.getItem("salesList")) || [];
     let orders = JSON.parse(localStorage.getItem("ordersList")) || [];
 
-    setNoData(!sales.length && !orders.length);
-
-    console.log(!!sales.length && !!orders.length);
+    setNoData({ noSalesData: !sales.length, noOrdersData: !orders.length });
 
     let statOrgs = organizations.reduce(orgsReducer, organizationData);
     let statsSales = sales.reduce(salesReducer, salesData);
@@ -91,10 +89,10 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <section>
+    <section className="dashboard__section">
       <h2>CRM Dashboard</h2>
       <div className="dashboard__container">
-        <div className={`dashboard__basic--info ${noData ? "" : "overflow-x"}`}>
+        <div className={`dashboard__basic--info`}>
           <table>
             <thead>
               <tr>
@@ -124,66 +122,68 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-        {!noData && (
-          <>
-            <div className="dashboard__sales">
-              <h3>Sales results:</h3>
-              <PieChart
-                animate
-                animationDuration={500}
-                animationEasing="ease-out"
-                data={[
-                  {
-                    title: "Delivery",
-                    value: salesData?.delivery,
-                    color: "#dd3300",
-                  },
-                  {
-                    title: "Completed",
-                    value: salesData?.completed,
-                    color: "#00ef11",
-                  },
-                ]}
-                label={(data) => data.dataEntry.title}
-                labelStyle={{
-                  fontSize: "6px",
-                  fontWeight: "600",
-                  color: "white",
-                }}
-              />
-            </div>
-            <div className="dashboard__orders">
-              <h3>Orders results:</h3>
-              <PieChart
-                animate
-                animationDuration={500}
-                animationEasing="ease-out"
-                data={[
-                  {
-                    title: "Info Quotes",
-                    value: ordersData?.nagotiation,
-                    color: "#dd3300",
-                  },
-                  {
-                    title: "Nagotiations",
-                    value: ordersData?.infoquote,
-                    color: "#aa4400",
-                  },
-                  {
-                    title: "Bids",
-                    value: ordersData?.bid,
-                    color: "#00ef11",
-                  },
-                ]}
-                label={(data) => data.dataEntry.title}
-                labelStyle={{
-                  fontSize: "6px",
-                  fontWeight: "600",
-                  color: "white",
-                }}
-              />
-            </div>
-          </>
+        {!noData?.noSalesData && (
+          <div className="dashboard__sales">
+            <h3>Sales results:</h3>
+            <PieChart
+              animate
+              animationDuration={500}
+              animationEasing="ease-out"
+              data={[
+                {
+                  title: `${salesData?.delivery === 0 ? "" : "Delivery"}`,
+                  value: salesData?.delivery,
+                  color: "#dd3300",
+                },
+                {
+                  title: `${salesData?.completed === 0 ? "" : "Completed"}`,
+                  value: salesData?.completed,
+                  color: "#00ef11",
+                },
+              ]}
+              label={(data) => data.dataEntry.title}
+              labelStyle={{
+                fontSize: "6px",
+                fontWeight: "600",
+                color: "white",
+              }}
+            />
+          </div>
+        )}
+        {!noData?.noOrdersData && (
+          <div className="dashboard__orders">
+            <h3>Orders results:</h3>
+            <PieChart
+              animate
+              animationDuration={500}
+              animationEasing="ease-out"
+              data={[
+                {
+                  title: `${ordersData?.infoquote === 0 ? "" : "Info Quotes"}`,
+                  value: ordersData?.nagotiation,
+                  color: "#dd3300",
+                },
+                {
+                  title: `${
+                    ordersData?.nagotiation === 0 ? "" : "Nagotiations"
+                  }`,
+                  value: ordersData?.infoquote,
+                  color: "#00aaaa",
+                },
+                {
+                  title: `${ordersData?.bid === 0 ? "" : "Bids"}`,
+                  value: ordersData?.bid,
+                  color: "#00ef11",
+                },
+              ]}
+              label={(data) => data.dataEntry.title}
+              labelStyle={{
+                fontSize: "6px",
+                fontWeight: "600",
+                color: "white",
+              }}
+            />
+          </div>
         )}
       </div>
     </section>

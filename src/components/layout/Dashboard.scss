@@ -1,8 +1,9 @@
 @use "../../scss/partials/mixins" as m;
 
-section {
-  padding: 1.5rem 2rem !important;
-  ¸ h2 {
+.dashboard__section {
+  padding: 1.5rem 2rem;
+  height: 100%;
+  h2 {
     text-align: center;
   }
   .dashboard__container {
@@ -11,6 +12,7 @@ section {
     grid-template-rows: 1fr 3fr 3fr;
     grid-template-areas: "basic basic" "sales orders" "sales orders";
     gap: 10%;
+    justify-content: space-evenly;
     width: 100%;
     @include m.mediaQuery(768px) {
       gap: 5%;
@@ -21,6 +23,7 @@ section {
   .dashboard__basic--info {
     grid-area: basic;
     min-height: 75px;
+    overflow-x: auto;
     table {
       th,
       td {
@@ -53,15 +56,11 @@ section {
 }
 
 table {
-  max-width: 80%;
+  max-width: 100%;
   thead {
     tr {
       background: #222;
       color: #fff;
     }
   }
-}
-
-.overflow-x {
-  overflow-x: auto !important;
 }
