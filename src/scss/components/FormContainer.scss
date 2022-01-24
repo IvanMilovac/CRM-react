@@ -10,6 +10,7 @@
     url("../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   @include m.flex();
 }
 
@@ -21,7 +22,7 @@
   height: 500px;
   max-height: 80%;
   @include m.border(
-    $width: 0.3rem,
+    $width: 0.2rem,
     $color: rgba(0, 0, 0, 0.808),
     $radius: 0.5rem,
     $side: ""

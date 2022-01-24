@@ -4,6 +4,7 @@
   background: radial-gradient(rgba(241, 241, 241, 0.687), rgba(78, 78, 78, 0.578)), url("../../assets/images/funnel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -24,7 +25,7 @@
   max-width: 90%;
   height: 500px;
   max-height: 80%;
-  border: 0.3rem solid rgba(0, 0, 0, 0.808);
+  border: 0.2rem solid rgba(0, 0, 0, 0.808);
   border-radius: 0.5rem;
   background: white;
   box-shadow: 3px 17px 32px 0px #828282;

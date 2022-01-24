@@ -79,6 +79,7 @@ const AddSalesRecordForm = ({
               payload: { name: "company", value: e },
             })
           }
+          required
         />
       </div>
       <div></div>
@@ -94,6 +95,7 @@ const AddSalesRecordForm = ({
               payload: { name: "status", value: e },
             })
           }
+          required
         />
       </div>
       <Input
@@ -106,6 +108,7 @@ const AddSalesRecordForm = ({
           })
         }
         className=""
+        required
       />
       <Input
         name="date"
@@ -118,6 +121,7 @@ const AddSalesRecordForm = ({
           })
         }
         className=""
+        required
       />
       <div className="add-organization__modal-buttons">
         <button type="submit">Save</button>

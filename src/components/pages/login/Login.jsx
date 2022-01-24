@@ -12,8 +12,8 @@ import Logo from "../../../assets/images/logo.svg";
 import "../../../scss/components/FormContainer.scss";
 
 const initialFormState = {
-  email: "",
-  password: "",
+  email: "Ivan@test.hr",
+  password: "12345678",
   error: "",
   loading: false,
 };
