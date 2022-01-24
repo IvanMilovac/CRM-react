@@ -8,7 +8,7 @@
   position: relative;
   background: #ffffff;
   color: #2c2c2c;
-  height: 100%;
+  height: 100vh;
   box-shadow: 0 2px 4px 0px;
   z-index: 999;
 }
@@ -74,6 +74,21 @@
 }
 .nav__logout:hover {
   text-decoration: underline;
+}
+
+form button {
+  background: white;
+  border: none;
+  border: 1px solid black;
+  border-radius: 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+}
+form button:hover {
+  background: black;
+  color: white;
+  box-shadow: 2px 2px 12px 0px #828282;
 }
 
 @-webkit-keyframes rotateArrowClockWise {
